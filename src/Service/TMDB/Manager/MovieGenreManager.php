@@ -3,7 +3,7 @@
 namespace App\Service\TMDB\Manager;
 
 use App\Entity\DTO\MovieGenreDTO;
-use App\Contracts\PaginatorInterface;
+use App\Contracts\SearchInterface;
 use App\Service\RemoteWebService;
 use FOPG\Component\UtilsBundle\Collection\Collection;
 use FOPG\Component\UtilsBundle\Env\Env;
@@ -12,28 +12,29 @@ use Symfony\Component\HttpFoundation\Response;
 class MovieGenreManager extends AbstractManager {
 
   private static function populate_find_all_from_remote_api(array $data): Collection {
+    /** @var Collection $collection */
     $collection = new Collection();
     if(!empty($data['genres'])) {
       $collection = new Collection(
         array: $data['genres'],
-        callback: function(int $index, mixed $genre): mixed {
+        callback: function(int $index, array $genre): string {
           return $genre['name'];
         },
         cmpAlgorithm: function($a,$b): bool { return ($a < $b); },
-        callbackForValue: function(int $index, mixed $genre): mixed {
+        callbackForValue: function(int $index, array $genre): MovieGenreDTO {
           $entity = new MovieGenreDTO();
           $entity->setId($genre['id']);
           $entity->setName($genre['name']);
           return $entity;
         }
       );
-
+      /** Tri rapide */
       $collection->heapSort();
     }
     return $collection;
   }
 
-  public function findAll(int $offset=PaginatorInterface::DEFAULT_OFFSET, int $limit=PaginatorInterface::DEFAULT_LIMIT): Collection {
+  public function findAll(int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     /** @var RemoteWebService $rws */
     $rws = $this->getRemoteWebService();
     /** @var Uri $uri */
@@ -45,6 +46,10 @@ class MovieGenreManager extends AbstractManager {
       ignoreJWT: false
     );
 
-    return ($output['statusCode'] === Response::HTTP_OK) ? self::populate_find_all_from_remote_api($output['data']) : [];
+    return ($output['statusCode'] === Response::HTTP_OK) ? self::populate_find_all_from_remote_api($output['data']) : new Collection();
+  }
+
+  public function findBy(array $params=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+    throw new \Exception("@todo à implémenter");
   }
 }

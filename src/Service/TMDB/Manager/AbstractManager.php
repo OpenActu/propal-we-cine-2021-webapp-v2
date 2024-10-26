@@ -3,11 +3,11 @@
 namespace App\Service\TMDB\Manager;
 
 use App\Service\RemoteWebService;
-use App\Contracts\{LocalizationInterface,PaginatorInterface};
+use App\Contracts\{LocalizationInterface,SearchInterface};
 use FOPG\Component\UtilsBundle\Uri\Uri;
 use FOPG\Component\UtilsBundle\Env\Env;
 
-abstract class AbstractManager implements LocalizationInterface, PaginatorInterface {
+abstract class AbstractManager implements LocalizationInterface, SearchInterface {
 
   use LocalizationManagerTrait;
 
