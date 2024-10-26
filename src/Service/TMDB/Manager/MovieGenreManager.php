@@ -3,7 +3,7 @@
 namespace App\Service\TMDB\Manager;
 
 use App\Entity\DTO\MovieGenreDTO;
-use App\Contracts\SearchInterface;
+use App\Contracts\{SearchInterface, EntityDTOInterface};
 use App\Service\RemoteWebService;
 use FOPG\Component\UtilsBundle\Collection\Collection;
 use FOPG\Component\UtilsBundle\Env\Env;
@@ -50,6 +50,10 @@ class MovieGenreManager extends AbstractManager {
   }
 
   public function findBy(array $params=[], array $sortBy=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+    throw new \Exception("@todo à implémenter");
+  }
+
+  public function find(int $id): ?EntityDTOInterface {
     throw new \Exception("@todo à implémenter");
   }
 }

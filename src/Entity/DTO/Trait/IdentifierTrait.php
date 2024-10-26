@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Entity\DTO;
+namespace App\Entity\DTO\Trait;
 
-trait BasisTrait {
+trait IdentifierTrait {
   private ?int $id;
   private ?string $name;
   public function getId(): ?int { return $this->id; }

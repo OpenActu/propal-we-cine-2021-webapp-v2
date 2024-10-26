@@ -14,4 +14,5 @@ interface SearchInterface {
 
   public function findAll(int $offset=self::DEFAULT_OFFSET, int $limit=self::DEFAULT_LIMIT): Collection;
   public function findBy(array $params=[], array $sortBy=[], int $offset=self::DEFAULT_OFFSET, int $limit=self::DEFAULT_LIMIT): Collection;
+  public function find(int $id): ?EntityDTOInterface;
 }

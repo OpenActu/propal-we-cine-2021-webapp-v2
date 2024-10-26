@@ -2,9 +2,8 @@
 
 namespace App\Service\TMDB\Manager;
 
-use App\Contracts\SearchInterface;
-use App\Entity\DTO\MovieDTO;
-use App\Entity\DTO\MovieGenreDTO;
+use App\Contracts\{SearchInterface,EntityDTOInterface};
+use App\Entity\DTO\{CountryDTO, MovieDTO, MovieCollectionDTO, MovieGenreDTO, ProductionCompanyDTO};
 use App\Service\TMDB\Manager\Trait\SearchManagerTrait;
 use FOPG\Component\UtilsBundle\Collection\Collection;
 use FOPG\Component\UtilsBundle\String\StringFacility;
@@ -49,7 +48,7 @@ class MovieManager extends AbstractManager {
         $params,
         self::generate_sort_params($sortBy)
       ),
-      ignoreJWT: false
+      ignoreJWT: true
     );
     if($output['statusCode'] == Response::HTTP_OK) {
       $collection = self::populate_find_by_from_remote_api($output['data']);
@@ -84,12 +83,76 @@ class MovieManager extends AbstractManager {
             voteAverage: $movie['vote_average']??0,
             voteCount: $movie['vote_count']??0
           );
+
           foreach($movie['genre_ids'] as $movieGenreId)
             $entity->addMovieGenre(new MovieGenreDTO(id: $movieGenreId));
+
           return $entity;
         }
       );
     }
     return $collection;
+  }
+
+  public function find(int $id): ?EntityDTOInterface {
+    /** @var RemoteWebService $rws */
+    $rws = $this->getRemoteWebService();
+    /** @var Uri $uri */
+    $uri = $this->getUri()->setPath(str_replace("{{id}}",$id,Env::get('TMDB_API_MOVIE_DETAILS')));
+    /** @var array $output */
+    $output = $rws->call(
+      remoteUrl: $this->getUri(),
+      ignoreJWT: true,
+      params: ['api_key' => $this->getApiKey(),'language' => $this->getLocale()]
+    );
+    if($output['statusCode'] == Response::HTTP_OK) {
+      $entity = self::populate_find_from_remote_api($output['data']);
+      return $entity;
+    }
+    return null;
+  }
+
+  private static function populate_find_from_remote_api(array $movie): MovieDTO {
+    /** @var MovieDTO $entity */
+    $entity = new MovieDTO(
+      id: $movie['id'],
+      title: $movie['title'],
+      adult: $movie['adult']??false,
+      backdropPath: $movie['backdrop_path']??null,
+      originalLanguage: $movie['original_language']??null,
+      originalTitle: $movie['original_title']??null,
+      overview: $movie['overview']??null,
+      popularity: $movie['popularity']??0,
+      posterPath: $movie['poster_path']??null,
+      releaseDate: $movie['release_date'] ? new \DateTime($movie['release_date']) : null,
+      voteAverage: $movie['vote_average']??0,
+      voteCount: $movie['vote_count']??0,
+      budget: $movie['budget']??null,
+      homepage: $movie['homepage']??null,
+      imdbId: $movie['imdb_id']??null,
+      revenue: $movie['revenue']??null
+    );
+    if(!empty($movie['belongs_to_collection'])) {
+      $collection = $movie['belongs_to_collection'];
+      $entity->setBelongsToCollection(new MovieCollectionDTO(id: $collection['id'],name: $collection['name'], posterPath: $collection['poster_path'], backdropPath: $collection['backdrop_path']));
+    }
+
+    foreach($movie['genres'] as $genre)
+      $entity->addMovieGenre(new MovieGenreDTO(id: $genre['id'],name: $genre['name']));
+    foreach($movie['origin_country'] as $code)
+      $entity->addOriginCountry(new CountryDTO(code: $code));
+    foreach($movie['production_companies'] as $pc) {
+      $obj = new ProductionCompanyDTO(id: $pc['id'],name: $pc['name'],logoPath: $pc['logo_path']);
+      $obj->setOriginCountry(new CountryDTO(code: $pc['origin_country']));
+      $entity->addProductionCompany($obj);
+    }
+    foreach($movie['production_countries'] as $pc) {
+      $entity->addProductionCountry(new CountryDTO(code: $pc['iso_3166_1'],name: $pc['name']));
+    }
+
+      //dd($entity);
+    dump($movie);
+    dd('@todo arrêt à la donnée runtime');
+    return $entity;
   }
 }

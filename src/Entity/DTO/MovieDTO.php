@@ -3,38 +3,59 @@
 namespace App\Entity\DTO;
 
 use App\Contracts\EntityDTOInterface;
+use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 
 class MovieDTO implements EntityDTOInterface {
 
-  use BasisTrait;
+  use IdentifierTrait;
+  use PathTrait;
 
   private array $movieGenres=[];
+  private ?MovieCollectionDTO $belongsToCollection=null;
+  private array $originCountries=[];
+  private ?LanguageDTO $originalLanguage=null;
+  private array $productionCompanies=[];
+  private array $productionCountries=[];
 
   public function __construct(
     int $id,
     string $title,
+    ?string $posterPath=null,
+    ?string $backdropPath=null,
     private bool $adult=false,
-    private ?string $backdropPath=null,
-    private ?string $originalLanguage=null,
+    ?string $originalLanguage=null,
     private ?string $originalTitle=null,
     private ?string $overview=null,
     private float $popularity=0,
-    private ?string $posterPath=null,
     private ?\DateTime $releaseDate=null,
     private float $voteAverage=0,
-    private float $voteCount=0
+    private float $voteCount=0,
+    private ?int $budget=null,
+    private ?string $homepage=null,
+    private ?string $imdbId=null,
+    private ?int $revenue=null
   ){
     $this->setName($title);
     $this->setId($id);
+    $this->setBackdropPath($backdropPath);
+    $this->setPosterPath($posterPath);
+    if(!empty($originalLanguage)) {
+      $this->setOriginalLanguage(new LanguageDTO(code: $originalLanguage));
+    }
   }
 
+  public function getRevenue(): ?int { return $this->revenue; }
+  public function getImdbId(): ?string { return $this->imdbId; }
+  public function getHomepage(): ?string { return $this->homepage; }
+  public function getBudget(): ?int { return $this->budget; }
+  public function setBelongsToCollection(MovieCollectionDTO $collection): static { $this->belongsToCollection=$collection; return $this; }
+  public function getBelongsToCollection(): ?MovieCollectionDTO { return $this->belongsToCollection; }
   public function getAdult(): bool { return $this->adult; }
-  public function getBackdropPath(): ?string { return $this->backdropPath; }
-  public function getOriginalLanguage(): ?string { return $this->originalLanguage; }
+  public function setOriginalLanguage(LanguageDTO $language): static { $this->originalLanguage = $language; return $this; }
+  public function getOriginalLanguage(): ?LanguageDTO { return $this->originalLanguage; }
   public function getOriginalTitle(): ?string { return $this->originalTitle; }
   public function getOverview(): ?string { return $this->overview; }
   public function getPopularity(): float { return $this->popularity; }
-  public function getPosterPath(): ?string { return $this->posterPath; }
   public function getReleaseDate(): ?\DateTime { return $this->releaseDate; }
   public function getTitle(): ?string { return $this->getName(); }
   public function getVoteAverage(): float { return $this->voteAverage; }
@@ -44,4 +65,10 @@ class MovieDTO implements EntityDTOInterface {
     return $this;
   }
   public function getMovieGenres(): array { return $this->movieGenres; }
+  public function addOriginCountry(CountryDTO $country): static { $this->originCountries[]=$country; return $this; }
+  public function getOriginCountries(): array { return $this->originCountries; }
+  public function addProductionCompany(ProductionCompanyDTO $pc): static { $this->productionCompanies[]=$pc; return $this; }
+  public function getProductionCompanies(): array { return $this->productionCompanies; }
+  public function addProductioncountry(CountryDTO $country): static { $this->productionCountries[]=$country; return $this; }
+  public function getProductionCountries(): array { return $this->productionCountries; }
 }
