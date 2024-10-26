@@ -3,7 +3,7 @@
 namespace App\Service\TMDB\Manager;
 
 use App\Contracts\{SearchInterface,EntityDTOInterface};
-use App\Entity\DTO\{CountryDTO, MovieDTO, MovieCollectionDTO, MovieGenreDTO, ProductionCompanyDTO};
+use App\Entity\DTO\{CountryDTO, LanguageDTO, MovieDTO, MovieCollectionDTO, MovieGenreDTO, ProductionCompanyDTO};
 use App\Service\TMDB\Manager\Trait\SearchManagerTrait;
 use FOPG\Component\UtilsBundle\Collection\Collection;
 use FOPG\Component\UtilsBundle\String\StringFacility;
@@ -130,7 +130,11 @@ class MovieManager extends AbstractManager {
       budget: $movie['budget']??null,
       homepage: $movie['homepage']??null,
       imdbId: $movie['imdb_id']??null,
-      revenue: $movie['revenue']??null
+      revenue: $movie['revenue']??null,
+      runtime: $movie['runtime']??null,
+      status: $movie['status']??null,
+      tagline: $movie['tagline']??null,
+      video: $movie['video']??false
     );
     if(!empty($movie['belongs_to_collection'])) {
       $collection = $movie['belongs_to_collection'];
@@ -146,13 +150,10 @@ class MovieManager extends AbstractManager {
       $obj->setOriginCountry(new CountryDTO(code: $pc['origin_country']));
       $entity->addProductionCompany($obj);
     }
-    foreach($movie['production_countries'] as $pc) {
+    foreach($movie['production_countries'] as $pc)
       $entity->addProductionCountry(new CountryDTO(code: $pc['iso_3166_1'],name: $pc['name']));
-    }
-
-      //dd($entity);
-    dump($movie);
-    dd('@todo arrêt à la donnée runtime');
+    foreach($movie['spoken_languages'] as $sl)
+      $entity->addSpokenLanguage(new LanguageDTO(name: $sl['name'],code: $sl['iso_639_1'], englishName: $sl['english_name']));
     return $entity;
   }
 }

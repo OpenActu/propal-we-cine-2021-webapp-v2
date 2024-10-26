@@ -8,8 +8,6 @@ class LanguageDTO {
 
   use ReferenceTrait;
 
-
-
   public function __construct(
     private ?string $englishName=null,
     ?string $code=null,

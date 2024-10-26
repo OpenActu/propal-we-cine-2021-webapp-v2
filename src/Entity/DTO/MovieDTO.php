@@ -16,6 +16,7 @@ class MovieDTO implements EntityDTOInterface {
   private ?LanguageDTO $originalLanguage=null;
   private array $productionCompanies=[];
   private array $productionCountries=[];
+  private array $spokenLanguages=[];
 
   public function __construct(
     int $id,
@@ -33,7 +34,11 @@ class MovieDTO implements EntityDTOInterface {
     private ?int $budget=null,
     private ?string $homepage=null,
     private ?string $imdbId=null,
-    private ?int $revenue=null
+    private ?int $revenue=null,
+    private ?int $runtime=null,
+    private ?string $status=null,
+    private ?string $tagline=null,
+    private bool $video=false
   ){
     $this->setName($title);
     $this->setId($id);
@@ -44,6 +49,10 @@ class MovieDTO implements EntityDTOInterface {
     }
   }
 
+  public function getVideo(): bool { return $this->video; }
+  public function getTagline(): ?string { return $this->tagline; }
+  public function getStatus(): ?string { return $this->status; }
+  public function getRuntime(): ?int { return $this->runtime; }
   public function getRevenue(): ?int { return $this->revenue; }
   public function getImdbId(): ?string { return $this->imdbId; }
   public function getHomepage(): ?string { return $this->homepage; }
@@ -71,4 +80,6 @@ class MovieDTO implements EntityDTOInterface {
   public function getProductionCompanies(): array { return $this->productionCompanies; }
   public function addProductioncountry(CountryDTO $country): static { $this->productionCountries[]=$country; return $this; }
   public function getProductionCountries(): array { return $this->productionCountries; }
+  public function addSpokenLanguage(LanguageDTO $lg): static { $this->spokenLanguages[]=$lg; return $this; }
+  public function getSpokenLanguages(): array { return $this->spokenLanguages; }
 }
