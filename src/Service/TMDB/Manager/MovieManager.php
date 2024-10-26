@@ -14,7 +14,7 @@ class MovieManager extends AbstractManager {
 
   use SearchManagerTrait;
 
-  public function findAll(int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+  public function findAll(int $page=SearchInterface::DEFAULT_PAGE, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     throw new \Exception("@todo à implémenter");
   }
 
@@ -35,7 +35,7 @@ class MovieManager extends AbstractManager {
     return $output;
   }
 
-  public function search(string $query, int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+  public function search(string $query, int $page=SearchInterface::DEFAULT_PAGE, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     /** @var RemoteWebService $rws */
     $rws = $this->getRemoteWebService();
     /** @var Uri $uri */
@@ -43,7 +43,7 @@ class MovieManager extends AbstractManager {
     /** @var array $output */
     $output = $rws->call(
       remoteUrl: $this->getUri(),
-      params: ['api_key' => $this->getApiKey(),'language' => $this->getLocale(),'query' => $query],
+      params: ['api_key' => $this->getApiKey(),'language' => $this->getLocale(),'query' => $query, 'page' => $page],
       ignoreJWT: true
     );
     if($output['statusCode'] == Response::HTTP_OK) {
@@ -55,7 +55,7 @@ class MovieManager extends AbstractManager {
     return null;
   }
 
-  public function findBy(array $params=[], array $sortBy=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+  public function findBy(array $params=[], array $sortBy=[], int $page=SearchInterface::DEFAULT_PAGE, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     /** @var RemoteWebService $rws */
     $rws = $this->getRemoteWebService();
     /** @var Uri $uri */
@@ -64,7 +64,7 @@ class MovieManager extends AbstractManager {
     $output = $rws->call(
       remoteUrl: $this->getUri(),
       params: array_merge(
-        ['api_key' => $this->getApiKey(),'language' => $this->getLocale()],
+        ['api_key' => $this->getApiKey(),'language' => $this->getLocale(),'page' => $page],
         $params,
         self::generate_sort_params($sortBy)
       ),

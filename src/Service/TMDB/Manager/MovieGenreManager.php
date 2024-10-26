@@ -34,7 +34,7 @@ class MovieGenreManager extends AbstractManager {
     return $collection;
   }
 
-  public function findAll(int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+  public function findAll(int $page=SearchInterface::DEFAULT_PAGE, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     /** @var RemoteWebService $rws */
     $rws = $this->getRemoteWebService();
     /** @var Uri $uri */
@@ -42,14 +42,14 @@ class MovieGenreManager extends AbstractManager {
     /** @var array $output */
     $output = $rws->call(
       remoteUrl: $this->getUri(),
-      params: ['api_key' => $this->getApiKey(),'language' => $this->getLocale()],
+      params: ['api_key' => $this->getApiKey(),'language' => $this->getLocale(),'page' => $page],
       ignoreJWT: false
     );
 
     return ($output['statusCode'] === Response::HTTP_OK) ? self::populate_find_all_from_remote_api($output['data']) : new Collection();
   }
 
-  public function findBy(array $params=[], array $sortBy=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+  public function findBy(array $params=[], array $sortBy=[], int $page=SearchInterface::DEFAULT_PAGE, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     throw new \Exception("@todo à implémenter");
   }
 
