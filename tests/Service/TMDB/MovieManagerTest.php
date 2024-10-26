@@ -36,7 +36,7 @@ class MovieManagerTest extends KernelTestCase {
           ?int &$totalPages=null,
           ?int &$totalResults=null
         ) {
-          $movies=$manager->search($query);
+          $movies=$manager->search(query: $query,page: 1);
           $totalPages=$manager->getTotalPages();
           $totalResults=$manager->getTotalResults();
         }
@@ -44,7 +44,7 @@ class MovieManagerTest extends KernelTestCase {
       ->then(
         description: "Je récupère les résultats contenant $query",
         callback: function(Collection $movies, int $totalPages, int $totalResults): bool {
-          return ($totalResults > 0); 
+          return ($totalResults > 0);
         },
         result: true
       )
@@ -80,7 +80,7 @@ class MovieManagerTest extends KernelTestCase {
           ?int &$totalPages=null,
           ?int &$totalResults=null
         ) {
-          $movies=$manager->findBy(params: ['with_genres' => $movieGenreId], sortBy: ['popularity' => 'desc']);
+          $movies=$manager->findBy(params: ['with_genres' => $movieGenreId], sortBy: ['popularity' => 'desc'], page: 1);
           $totalPages=$manager->getTotalPages();
           $totalResults=$manager->getTotalResults();
         }
