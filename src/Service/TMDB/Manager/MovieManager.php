@@ -35,6 +35,26 @@ class MovieManager extends AbstractManager {
     return $output;
   }
 
+  public function search(string $query, int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+    /** @var RemoteWebService $rws */
+    $rws = $this->getRemoteWebService();
+    /** @var Uri $uri */
+    $uri = $this->getUri()->setPath(Env::get('TMDB_API_MOVIE_LIST_SEARCH'));
+    /** @var array $output */
+    $output = $rws->call(
+      remoteUrl: $this->getUri(),
+      params: ['api_key' => $this->getApiKey(),'language' => $this->getLocale(),'query' => $query],
+      ignoreJWT: true
+    );
+    if($output['statusCode'] == Response::HTTP_OK) {
+      $collection = self::populate_find_by_from_remote_api($output['data']);
+      $this->setTotalPages($output['data']['total_pages']);
+      $this->setTotalResults($output['data']['total_results']);
+      return $collection;
+    }
+    return null;
+  }
+
   public function findBy(array $params=[], array $sortBy=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     /** @var RemoteWebService $rws */
     $rws = $this->getRemoteWebService();

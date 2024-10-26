@@ -12,6 +12,44 @@ use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 
 class MovieManagerTest extends KernelTestCase {
 
+  public function testSearch() {
+    self::bootKernel();
+    /** @var TestContainer $container */
+    $container = static::getContainer();
+
+    $this->section('Recherche des films en texte libre');
+    /** @var MovieManager $mm */
+    $mm = $container->get(MovieManager::class);
+    $query = 'napoléon';
+    $this
+      ->given(
+        description: "Récupération des films contenant le terme $query",
+        manager: $mm,
+        query: $query
+      )
+      ->when(
+        description: "J'appelle le service web distant pour récupérer les films contenant ".$query,
+        callback: function(
+          MovieManager $manager,
+          string $query,
+          ?Collection &$movies=null,
+          ?int &$totalPages=null,
+          ?int &$totalResults=null
+        ) {
+          $movies=$manager->search($query);
+          $totalPages=$manager->getTotalPages();
+          $totalResults=$manager->getTotalResults();
+        }
+      )
+      ->then(
+        description: "Je récupère les résultats contenant $query",
+        callback: function(Collection $movies, int $totalPages, int $totalResults): bool {
+          return ($totalResults > 0); 
+        },
+        result: true
+      )
+    ;
+  }
   public function testGetTopRatedByCategory() {
     self::bootKernel();
     /** @var TestContainer $container */
