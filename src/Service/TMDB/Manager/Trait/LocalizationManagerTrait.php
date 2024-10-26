@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\TMDB\Manager;
+namespace App\Service\TMDB\Manager\Trait;
 
 use App\Contracts\LocalizationInterface;
 

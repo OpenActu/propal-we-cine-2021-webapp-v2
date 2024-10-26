@@ -5,23 +5,38 @@ namespace App\Service\TMDB\Manager;
 use App\Contracts\SearchInterface;
 use App\Entity\DTO\MovieDTO;
 use App\Entity\DTO\MovieGenreDTO;
+use App\Service\TMDB\Manager\Trait\SearchManagerTrait;
 use FOPG\Component\UtilsBundle\Collection\Collection;
+use FOPG\Component\UtilsBundle\String\StringFacility;
 use FOPG\Component\UtilsBundle\Env\Env;
+use Symfony\Component\HttpFoundation\Response;
 
 class MovieManager extends AbstractManager {
+
+  use SearchManagerTrait;
 
   public function findAll(int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     throw new \Exception("@todo à implémenter");
   }
 
-  /**
-   * Récupération des vidéos top rated par identifiant de catégorie
-   *
-   * @param int $movieGenreId Identifiant de genre de vidéos
-   * @param int $offset Origine de la recherche
-   * @param int $limit Nombre d'occurences renvoyées
-   */
-  public function findBy(array $params=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+  public static function generate_sort_params(array $params): array {
+    $output=[];
+    foreach($params as $key => $value) {
+      switch($key) {
+        case 'originalTitle':
+        case 'popularity':
+        case 'title':
+        case 'voteAverage':
+        case 'voteCount':
+          if(in_array(mb_strtolower($value),[SearchInterface::SORT_ASC,SearchInterface::SORT_DESC]))
+            $output['sort_by']=StringFacility::toSnakeCase("$key").'.'.mb_strtolower($value);
+        default:
+      }
+    }
+    return $output;
+  }
+
+  public function findBy(array $params=[], array $sortBy=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     /** @var RemoteWebService $rws */
     $rws = $this->getRemoteWebService();
     /** @var Uri $uri */
@@ -29,10 +44,18 @@ class MovieManager extends AbstractManager {
     /** @var array $output */
     $output = $rws->call(
       remoteUrl: $this->getUri(),
-      params: array_merge(['api_key' => $this->getApiKey(),'language' => $this->getLocale()],$params),
+      params: array_merge(
+        ['api_key' => $this->getApiKey(),'language' => $this->getLocale()],
+        $params,
+        self::generate_sort_params($sortBy)
+      ),
       ignoreJWT: false
     );
-    $collection = self::populate_find_by_from_remote_api($output['data']);
+    if($output['statusCode'] == Response::HTTP_OK) {
+      $collection = self::populate_find_by_from_remote_api($output['data']);
+      $this->setTotalPages($output['data']['total_pages']);
+      $this->setTotalResults($output['data']['total_results']);
+    }
     return $collection;
   }
 

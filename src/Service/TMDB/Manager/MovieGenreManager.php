@@ -49,7 +49,7 @@ class MovieGenreManager extends AbstractManager {
     return ($output['statusCode'] === Response::HTTP_OK) ? self::populate_find_all_from_remote_api($output['data']) : new Collection();
   }
 
-  public function findBy(array $params=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
+  public function findBy(array $params=[], array $sortBy=[], int $offset=SearchInterface::DEFAULT_OFFSET, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     throw new \Exception("@todo à implémenter");
   }
 }

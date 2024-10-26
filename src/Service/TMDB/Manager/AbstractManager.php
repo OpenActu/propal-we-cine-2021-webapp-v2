@@ -2,8 +2,9 @@
 
 namespace App\Service\TMDB\Manager;
 
-use App\Service\RemoteWebService;
 use App\Contracts\{LocalizationInterface,SearchInterface};
+use App\Service\RemoteWebService;
+use App\Service\TMDB\Manager\Trait\LocalizationManagerTrait;
 use FOPG\Component\UtilsBundle\Uri\Uri;
 use FOPG\Component\UtilsBundle\Env\Env;
 

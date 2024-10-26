@@ -37,16 +37,29 @@ class MovieManagerTest extends KernelTestCase {
         callback: function(
           MovieManager $manager,
           int $movieGenreId,
-          ?Collection &$movies=null
+          ?Collection &$movies=null,
+          ?int &$totalPages=null,
+          ?int &$totalResults=null
         ) {
-          $movies=$manager->findBy(['with_genres' => $movieGenreId]);
+          $movies=$manager->findBy(params: ['with_genres' => $movieGenreId], sortBy: ['popularity' => 'desc']);
+          $totalPages=$manager->getTotalPages();
+          $totalResults=$manager->getTotalResults();
         }
       )
-/*      ->then(
-        description: "Je dois retrouver ".$numberCategories." catégories",
-        callback: function(Collection $movieGenres) { return $movieGenres->count(); },
-        result: $numberCategories
-      )*/
+      ->then(
+        description: "Je dois retrouver au moins un film",
+        callback: function(Collection $movies,int $totalPages, int $totalResults) {
+          $movie = $movies->current();
+          $check = !empty($movie) &&
+                  !empty($movie->getTitle()) &&
+                  !empty($movie->getId()) &&
+                  ($totalPages > 1) &&
+                  ($totalResults > 1)
+          ;
+          return $check;
+        },
+        result: true
+      )
     ;
   }
 }
