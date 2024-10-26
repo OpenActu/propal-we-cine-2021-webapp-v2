@@ -20,3 +20,17 @@ yarn install
 php bin/console assets:install --symlink public
 yarn watch
 ```
+
+# Validation de l'application
+
+1. Se connecter à la machine webapp via docker en ligne de commande
+
+```
+docker exec -ti propal-we-cine-2021-webapp-instance /bin/bash
+```
+
+2. Exécuter les commandes suivantes :
+
+```
+php bin/phpunit tests
+```

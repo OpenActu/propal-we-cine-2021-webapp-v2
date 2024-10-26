@@ -1,0 +1,9 @@
+services:
+    App\Service\TMDB\MovieManager:
+        public: true
+        autowire: true
+        autoconfigure: true
+    App\Service\TMDB\MovieGenreManager:
+        public: true
+        autowire: true
+        autoconfigure: true
