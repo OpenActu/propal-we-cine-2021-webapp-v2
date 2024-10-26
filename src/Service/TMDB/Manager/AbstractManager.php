@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Service\TMDB;
+namespace App\Service\TMDB\Manager;
 
 use App\Service\RemoteWebService;
-use App\Contracts\{PaginatorInterface};
+use App\Contracts\{LocalizationInterface,PaginatorInterface};
 use FOPG\Component\UtilsBundle\Uri\Uri;
 use FOPG\Component\UtilsBundle\Env\Env;
 
-abstract class AbstractManager implements PaginatorInterface {
+abstract class AbstractManager implements LocalizationInterface, PaginatorInterface {
+
+  use LocalizationManagerTrait;
 
   private ?string $apiKey=null;
 
