@@ -26,6 +26,9 @@
             "migrations/.gitignore"
         ]
     },
+    "friend-of-pastry-garden/utils-bundle": {
+        "version": "1.0.7"
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
