@@ -4,7 +4,7 @@ namespace App\Entity\DTO;
 
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 
-class ProductionCompanyDTO {
+class ProductionCompanyDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
   use PathTrait;
@@ -23,4 +23,11 @@ class ProductionCompanyDTO {
 
   public function setOriginCountry(CountryDTO $country): static { $this->originCountry=$country; return $this; }
   public function getOriginCountry(): ?CountryDTO { return $this->originCountry; }
+
+  public function serializeToArray(): array {
+    return [
+      'id' => $this->getId(),
+      'name' => $this->getName(),
+    ];
+  }
 }

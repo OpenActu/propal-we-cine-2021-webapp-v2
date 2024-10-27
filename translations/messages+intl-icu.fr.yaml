@@ -2,8 +2,17 @@ default:
   title: Page d'accueil
   website_name: "We movies"
   search: "Rechercher"
+  close: "Fermer"
 movie:
   index:
+    belongs_to_collection: "Collection"
+    original_language: "Langue d'origine"
+    budget: "Budget"
+    revenue: "Revenus"
+    movie_genres: "Genres"
+    id: "Identifiant TMDB"
+    imdb_id: "Identifiant IMDB"
+    original_title: "Titre original"
     title: "Consultation des vidéos"
     vote_count: "votes"
     show_details: "Lire le détail"

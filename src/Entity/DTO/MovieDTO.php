@@ -2,10 +2,9 @@
 
 namespace App\Entity\DTO;
 
-use App\Contracts\EntityDTOInterface;
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 
-class MovieDTO implements EntityDTOInterface {
+class MovieDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
   use PathTrait;
@@ -82,4 +81,48 @@ class MovieDTO implements EntityDTOInterface {
   public function getProductionCountries(): array { return $this->productionCountries; }
   public function addSpokenLanguage(LanguageDTO $lg): static { $this->spokenLanguages[]=$lg; return $this; }
   public function getSpokenLanguages(): array { return $this->spokenLanguages; }
+
+  public function serializeToArray(): array {
+    $movieGenres=[];
+    foreach($this->getMovieGenres() as $movieGenre)
+      $movieGenres[]=$movieGenre->serializeToArray();
+    $originCountries=[];
+    foreach($this->getOriginCountries() as $originCountry)
+      $originCountries[]=$originCountry->serializeToArray();
+    $productionCompanies=[];
+    foreach($this->getProductionCompanies() as $productionCompany)
+      $productionCompanies[]=$productionCompany->serializeToArray();
+    $productionCountries=[];
+    foreach($this->getProductionCountries() as $productionCountry)
+      $productionCountries[]=$productionCountry->serializeToArray();
+    $spokenLanguages=[];
+    foreach($this->getSpokenLanguages() as $spokenLanguage)
+      $spokenLanguages[]=$spokenLanguage->serializeToArray();
+    return [
+      'id' => $this->getId(),
+      'title' => $this->getTitle(),
+      'adult' => $this->getAdult(),
+      'originalTitle' => $this->getOriginalTitle(),
+      'overview' => $this->getOverview(),
+      'popularity' => $this->getPopularity(),
+      'releaseDate' => $this->getReleaseDate() ? $this->getReleaseDate()->format('Y-m-d') : null,
+      'voteAverage' => $this->getVoteAverage(),
+      'voteCount' => $this->getVoteCount(),
+      'budget' => number_format($this->getBudget(),0,""," "),
+      'homepage' => $this->getHomepage(),
+      'imdbId' => $this->getImdbId(),
+      'revenue' => number_format($this->getRevenue(),0,""," "),
+      'runtime' => $this->getRuntime(),
+      'status' => $this->getStatus(),
+      'tagline' => $this->getTagline(),
+      'video' => $this->getVideo(),
+      'originalLanguage' => $this->getOriginalLanguage() ? $this->getOriginalLanguage()->serializeToArray() : null,
+      'movieGenres' => $movieGenres,
+      'belongsToCollection' => $this->getBelongsToCollection() ? $this->getBelongsToCollection()->serializeToArray() : null,
+      'originCountries' => $originCountries,
+      'productionCompanies' => $productionCompanies,
+      'productionCountries' => $productionCountries,
+      'spokenLanguages' => $spokenLanguages,
+    ];
+  }
 }

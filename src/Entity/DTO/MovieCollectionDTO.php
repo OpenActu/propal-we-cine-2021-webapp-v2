@@ -2,10 +2,9 @@
 
 namespace App\Entity\DTO;
 
-use App\Contracts\EntityDTOInterface;
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 
-class MovieCollectionDTO implements EntityDTOInterface {
+class MovieCollectionDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
   use PathTrait;
@@ -20,5 +19,12 @@ class MovieCollectionDTO implements EntityDTOInterface {
     $this->setId($id);
     $this->setBackdropPath($backdropPath);
     $this->setPosterPath($posterPath);
+  }
+
+  public function serializeToArray(): array {
+    return [
+      'id' => $this->getId(),
+      'name' => $this->getName(),
+    ];
   }
 }

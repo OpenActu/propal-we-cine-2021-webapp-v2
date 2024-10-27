@@ -2,10 +2,9 @@
 
 namespace App\Entity\DTO;
 
-use App\Contracts\EntityDTOInterface;
 use App\Entity\DTO\Trait\IdentifierTrait;
 
-class MovieGenreDTO implements EntityDTOInterface {
+class MovieGenreDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
 
@@ -14,5 +13,12 @@ class MovieGenreDTO implements EntityDTOInterface {
       $this->setId($id);
     if(!empty($name))
       $this->setName($name);
+  }
+
+  public function serializeToArray(): array {
+    return [
+      'id' => $this->getId(),
+      'name' => $this->getName(),
+    ];
   }
 }

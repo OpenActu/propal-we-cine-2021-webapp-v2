@@ -14,8 +14,14 @@
       <div class="card-body">
         <h5 class="card-title">{{movie.releaseDate|date('Y')}}</h5>
         <p class="card-text">{{movie.overview}}</p>
-        <a href="#" class="btn btn-primary">{{'movie.index.show_details'|trans}}</a>
+        <button class="btn btn-primary open-modal-movie" data-movie-id="{{movie.id}}">
+          <span class="spinner-border spinner-border-sm hide open-modal-movie-spinner" role="status" aria-hidden="true"></span>
+          {{'movie.index.show_details'|trans}}
+        </button>
       </div>
+    </div>
+    <div class="col-12">
+    &nbsp;
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 @import "~bootstrap/dist/css/bootstrap";
 
-.img-thumbnail {
-  max-height: 200px;
-}
+.img-thumbnail { max-height: 200px; }
+.hide { visibility: hidden; display: none; }
+.show { visibility: visible; display: block; }

@@ -1,0 +1,44 @@
+<!-- Modal -->
+<div class="modal fade" id="modal-movie" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal_movie_title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th>{{'movie.index.id'|trans}}</th><td id="modal_movie_id"></td>
+            </tr>
+            <tr>
+              <th>{{'movie.index.imdb_id'|trans}}</th><td id="modal_movie_imdb_id"></td>
+            </tr>
+            <tr>
+              <th>{{'movie.index.original_title'|trans}}</th><td id="modal_movie_original_title"></td>
+            </tr>
+            <tr>
+              <th>{{'movie.index.budget'|trans}}</th><td id="modal_movie_budget"></td>
+            </tr>
+            <tr>
+              <th>{{'movie.index.revenue'|trans}}</th><td id="modal_movie_revenue"></td>
+            </tr>
+            <tr>
+              <th>{{'movie.index.movie_genres'|trans}}</th><td id="modal_movie_movie_genres"></td>
+            </tr>
+            <tr>
+              <th>{{'movie.index.belongs_to_collection'|trans}}</th><td id="modal_movie_belongs_to_collection"></td>
+            </tr>
+            <tr>
+              <th>{{'movie.index.original_language'|trans}}</th><td id="modal_movie_original_language"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{'default.close'|trans}}</button>
+      </div>
+    </div>
+  </div>
+</div>

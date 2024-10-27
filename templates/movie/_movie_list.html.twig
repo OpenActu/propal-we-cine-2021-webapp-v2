@@ -1,12 +1,12 @@
 <div class="container">
+  {% for movie in movies %}
   <div class="row">
-    {% for movie in movies %}
     <div class="col-12">
     {% include 'movie/_movie_card.html.twig' with {'movie': movie} %}
     </div>
     <div class="col-12">
     &nbsp;
     </div>
-    {% endfor %}
   </div>
+  {% endfor %}
 </div>
