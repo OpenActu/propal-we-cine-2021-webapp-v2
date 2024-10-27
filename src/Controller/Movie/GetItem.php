@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Movie;
 
 use App\Entity\DTO\MovieDTO;
 use App\Service\TMDB\Manager\MovieManager;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/movie')]
-class MovieController extends AbstractController
+class GetItem extends AbstractController
 {
     public function __construct(
       private MovieManager $mm
@@ -19,7 +19,7 @@ class MovieController extends AbstractController
     }
 
     #[Route('/{id}', name: 'api_movie_GET_item', requirements:["id"=>"\d+"], methods:["GET"],options: ['expose' => true])]
-    public function jsonIndex(Request $request, ?int $id=null): Response
+    public function __invoke(Request $request, ?int $id=null): Response
     {
         $this->mm->setLocale($request->getLocale());
         /** @var ?MovieDTO $movie */

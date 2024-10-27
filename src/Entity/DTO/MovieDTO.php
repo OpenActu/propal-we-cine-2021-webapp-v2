@@ -3,19 +3,21 @@
 namespace App\Entity\DTO;
 
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
+use App\Utils\CollectionUtils;
+use FOPG\Component\UtilsBundle\Collection\Collection;
 
 class MovieDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
   use PathTrait;
 
-  private array $movieGenres=[];
+  private Collection $movieGenres;
   private ?MovieCollectionDTO $belongsToCollection=null;
-  private array $originCountries=[];
+  private Collection $originCountries;
   private ?LanguageDTO $originalLanguage=null;
-  private array $productionCompanies=[];
-  private array $productionCountries=[];
-  private array $spokenLanguages=[];
+  private Collection $productionCompanies;
+  private Collection $productionCountries;
+  private Collection $spokenLanguages;
 
   public function __construct(
     int $id,
@@ -39,6 +41,11 @@ class MovieDTO extends AbstractEntityDTO {
     private ?string $tagline=null,
     private bool $video=false
   ){
+    $this->spokenLanguages=new Collection();
+    $this->movieGenres=new Collection();
+    $this->originCountries=new Collection();
+    $this->productionCompanies=new Collection();
+    $this->productionCountries=new Collection();
     $this->setName($title);
     $this->setId($id);
     $this->setBackdropPath($backdropPath);
@@ -68,36 +75,18 @@ class MovieDTO extends AbstractEntityDTO {
   public function getTitle(): ?string { return $this->getName(); }
   public function getVoteAverage(): float { return $this->voteAverage; }
   public function getVoteCount(): float { return $this->voteCount; }
-  public function addMovieGenre(MovieGenreDTO $movieGenre): static {
-    $this->movieGenres[$movieGenre->getId()]=$movieGenre;
-    return $this;
-  }
-  public function getMovieGenres(): array { return $this->movieGenres; }
-  public function addOriginCountry(CountryDTO $country): static { $this->originCountries[]=$country; return $this; }
-  public function getOriginCountries(): array { return $this->originCountries; }
-  public function addProductionCompany(ProductionCompanyDTO $pc): static { $this->productionCompanies[]=$pc; return $this; }
-  public function getProductionCompanies(): array { return $this->productionCompanies; }
-  public function addProductioncountry(CountryDTO $country): static { $this->productionCountries[]=$country; return $this; }
-  public function getProductionCountries(): array { return $this->productionCountries; }
-  public function addSpokenLanguage(LanguageDTO $lg): static { $this->spokenLanguages[]=$lg; return $this; }
-  public function getSpokenLanguages(): array { return $this->spokenLanguages; }
+  public function addMovieGenre(MovieGenreDTO $movieGenre): static { $this->movieGenres->add($movieGenre); return $this; }
+  public function getMovieGenres(): Collection { return $this->movieGenres; }
+  public function addOriginCountry(CountryDTO $country): static { $this->originCountries->add($country); return $this; }
+  public function getOriginCountries(): Collection { return $this->originCountries; }
+  public function addProductionCompany(ProductionCompanyDTO $pc): static { $this->productionCompanies->add($pc); return $this; }
+  public function getProductionCompanies(): Collection { return $this->productionCompanies; }
+  public function addProductioncountry(CountryDTO $country): static { $this->productionCountries->add($country); return $this; }
+  public function getProductionCountries(): Collection { return $this->productionCountries; }
+  public function addSpokenLanguage(LanguageDTO $lg): static { $this->spokenLanguages->add($lg); return $this; }
+  public function getSpokenLanguages(): Collection { return $this->spokenLanguages; }
 
   public function serializeToArray(): array {
-    $movieGenres=[];
-    foreach($this->getMovieGenres() as $movieGenre)
-      $movieGenres[]=$movieGenre->serializeToArray();
-    $originCountries=[];
-    foreach($this->getOriginCountries() as $originCountry)
-      $originCountries[]=$originCountry->serializeToArray();
-    $productionCompanies=[];
-    foreach($this->getProductionCompanies() as $productionCompany)
-      $productionCompanies[]=$productionCompany->serializeToArray();
-    $productionCountries=[];
-    foreach($this->getProductionCountries() as $productionCountry)
-      $productionCountries[]=$productionCountry->serializeToArray();
-    $spokenLanguages=[];
-    foreach($this->getSpokenLanguages() as $spokenLanguage)
-      $spokenLanguages[]=$spokenLanguage->serializeToArray();
     return [
       'id' => $this->getId(),
       'title' => $this->getTitle(),
@@ -117,12 +106,12 @@ class MovieDTO extends AbstractEntityDTO {
       'tagline' => $this->getTagline(),
       'video' => $this->getVideo(),
       'originalLanguage' => $this->getOriginalLanguage() ? $this->getOriginalLanguage()->serializeToArray() : null,
-      'movieGenres' => $movieGenres,
+      'movieGenres' => CollectionUtils::serialize_to_array($this->getMovieGenres()),
       'belongsToCollection' => $this->getBelongsToCollection() ? $this->getBelongsToCollection()->serializeToArray() : null,
-      'originCountries' => $originCountries,
-      'productionCompanies' => $productionCompanies,
-      'productionCountries' => $productionCountries,
-      'spokenLanguages' => $spokenLanguages,
+      'originCountries' => CollectionUtils::serialize_to_array($this->getOriginCountries()),
+      'productionCompanies' => CollectionUtils::serialize_to_array($this->getProductionCompanies()),
+      'productionCountries' => CollectionUtils::serialize_to_array($this->getProductionCountries()),
+      'spokenLanguages' => CollectionUtils::serialize_to_array($this->getSpokenLanguages()),
     ];
   }
 }
