@@ -19,16 +19,13 @@ class SearchCollection extends AbstractController
     ) {
     }
 
-    #[Route('/search/{query}', name: 'api_movie_GET_search_collection', requirements:["query"=>"\w+"], methods:["GET"],options: ['expose' => true])]
-    public function __invoke(Request $request, string $query): Response
+    #[Route('/search/', name: 'api_movie_GET_search_collection', methods:["GET"],options: ['expose' => true])]
+    public function __invoke(Request $request): Response
     {
+        $query = $request->get('term','');
         $this->mm->setLocale($request->getLocale());
         /** @var Collection $movies */
         $movies=$this->mm->search(query: $query,page: 1);
-        return new JsonResponse([
-          'data' => CollectionUtils::serialize_to_array($movies),
-          'pages' => $this->mm->getTotalPages(),
-          'results' => $this->mm->getTotalResults(),
-        ]);
+        return new JsonResponse(CollectionUtils::serialize_to_array($movies));
     }
 }

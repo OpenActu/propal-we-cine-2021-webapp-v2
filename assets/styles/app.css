@@ -3,3 +3,12 @@
 .img-thumbnail { max-height: 200px; }
 .hide { visibility: hidden; display: none; }
 .show { visibility: visible; display: block; }
+.ui-menu-item {
+    border-bottom: 1px solid #eeeeee !important;
+    border-left: 1px solid #eeeeee !important;
+    border-right: 1px solid #eeeeee !important;
+    padding: 5px 5px 5px 5px;
+}
+.ui-menu-item:hover {
+  background-color: #eeeeee !important;
+}

@@ -18,3 +18,26 @@ Routing.setRoutingData(routes);
 window.Routing = Routing;
 
 require('bootstrap');
+require('webpack-jquery-ui');
+
+$(document).ready(() => {
+  $("#navbar_movie_search").autocomplete({
+    source: Routing.generate('api_movie_GET_search_collection'),
+    minLength:3,
+    select: function( event, ui ) { },
+    create: function( event, ui) {
+      $(this).data('ui-autocomplete')._renderItem = function( ul, item ) {
+        return $( "<li class='ui-menu-item'>" )
+          .append( "<div>" + item.title + "</div>" )
+          .appendTo( ul );
+      };
+    },
+    response: function(event, ui) {
+      const id = this.id;
+      if (!ui.content.length) {
+          var noResult = { value:"",label:"Aucun résultat",desc:"Aucun résultat" };
+          ui.content.push(noResult);
+      }
+    }
+  });
+});
