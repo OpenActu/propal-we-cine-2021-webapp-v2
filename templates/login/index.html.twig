@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'login.index.title'|trans}}{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>{{'login.index.title'|trans}}</h1>
+    </div>
+    <div class="col-12">
+    {% if error %}
+      <div class="alert alert-danger" role="alert">
+      {{ error.messageKey|trans(error.messageData, 'security') }}
+      </div>
+    {% endif %}
+    </div>
+    <div class="col-12">
+      <form action="{{ path('app_login') }}" method="post">
+        <div class="container">
+          <div class="row">
+            <div class="col-3">
+              <label class="form-label" for="username">{{'login.index.username'|trans}}</label>
+            </div>
+            <div class="col-9">
+              <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required>
+            </div>
+            <div class="col-3">
+              <label class="form-label" for="password">{{'login.index.password'|trans}}</label>
+            </div>
+            <div class="col-9">
+              <input class="form-control" type="password" id="password" name="_password" required>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">{{'login.index.submit'|trans}}</button>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

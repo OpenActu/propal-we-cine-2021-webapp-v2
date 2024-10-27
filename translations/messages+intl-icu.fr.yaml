@@ -3,6 +3,12 @@ default:
   website_name: "We movies"
   search: "Rechercher"
   close: "Fermer"
+login:
+  index:
+    title: "Authentification"
+    username: "Nom d'utilisateur (guest)"
+    password: "Mot de passe (guest)"
+    submit: "Se connecter"
 movie:
   index:
     belongs_to_collection: "Collection"
