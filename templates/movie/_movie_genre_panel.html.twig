@@ -1,0 +1,13 @@
+<div class="d-flex align-items-start">
+  <div class="nav flex-column nav-pills me-3" role="tablist" aria-orientation="vertical">
+    <!--<button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</button>
+    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</button>-->
+    {% for movieGenre in movieGenres %}
+    <a
+      class="nav-link {% if app.request.get('id') == movieGenre.id %}active{% endif %}"
+      href={{path('movie_genre_list_by_category',{id: movieGenre.id})}}
+      role="tab"
+      aria-selected="{% if app.request.get('id') == movieGenre.id %}true{% else %}false{% endif %}">{{movieGenre.name}}</a>
+    {% endfor %}
+  </div>
+</div>

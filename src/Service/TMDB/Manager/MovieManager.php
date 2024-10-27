@@ -73,7 +73,7 @@ class MovieManager extends AbstractManager {
       ignoreJWT: true
     );
     if($output['statusCode'] == Response::HTTP_OK) {
-      $collection = self::convert_array_to_collection($output['data']);
+      $collection = self::convert_array_to_collection($output['data'],$limit);
       $this->setTotalPages($output['data']['total_pages']);
       $this->setTotalResults($output['data']['total_results']);
     }

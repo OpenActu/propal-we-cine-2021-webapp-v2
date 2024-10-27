@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <div class="row">
+    {% for movie in highlights %}
+      {% if movie.posterPath %}
+      <div class="col-2">
+        <img
+          src="{{path('image_get', {format: 'w500', filename: movie.posterPath[1:]})}}"
+          class="img-fluid img-thumbnail"
+        />
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

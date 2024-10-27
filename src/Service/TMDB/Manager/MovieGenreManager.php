@@ -10,6 +10,7 @@ use FOPG\Component\UtilsBundle\Collection\Collection;
 use FOPG\Component\UtilsBundle\Env\Env;
 use FOPG\Component\UtilsBundle\Uri\Uri;
 use Symfony\Component\HttpFoundation\Response;
+
 class MovieGenreManager extends AbstractManager {
 
   use ConverterTrait;

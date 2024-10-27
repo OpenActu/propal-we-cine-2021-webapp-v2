@@ -119,7 +119,8 @@ class RemoteWebService {
 
       return [
           'statusCode' => $statusCode,
-          'data' => $data
+          'data' => $data,
+          'response' => $response
       ];
   }
 }

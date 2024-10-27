@@ -1,2 +1,9 @@
 default:
   title: Page d'accueil
+  website_name: "We movies"
+  search: "Rechercher"
+movie:
+  index:
+    title: "Consultation des vidéos"
+    vote_count: "votes"
+    show_details: "Lire le détail"
