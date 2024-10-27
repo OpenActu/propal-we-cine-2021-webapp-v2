@@ -94,6 +94,7 @@ class MovieDTO extends AbstractEntityDTO {
       'originalTitle' => $this->getOriginalTitle(),
       'overview' => $this->getOverview(),
       'popularity' => $this->getPopularity(),
+      'releaseYear' => $this->getReleaseDate() ? $this->getReleaseDate()->format('Y') : null,
       'releaseDate' => $this->getReleaseDate() ? $this->getReleaseDate()->format('Y-m-d') : null,
       'voteAverage' => $this->getVoteAverage(),
       'voteCount' => $this->getVoteCount(),

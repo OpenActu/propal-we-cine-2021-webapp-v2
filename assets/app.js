@@ -28,7 +28,7 @@ $(document).ready(() => {
     create: function( event, ui) {
       $(this).data('ui-autocomplete')._renderItem = function( ul, item ) {
         return $( "<li class='ui-menu-item'>" )
-          .append( "<div>" + item.title + "</div>" )
+          .append( "<div>" + item.title + " ("+item.releaseYear+")</div>" )
           .appendTo( ul );
       };
     },
