@@ -34,3 +34,7 @@ docker exec -ti propal-we-cine-2021-webapp-instance /bin/bash
 ```
 php bin/phpunit tests
 ```
+
+# Authentification
+
+L'authenfication est minimaliste en l'état. Pour se connecter il suffit simplement de saisir sur la mire *guest* en nom d'utilisateur et *guest* en mot de passe.
