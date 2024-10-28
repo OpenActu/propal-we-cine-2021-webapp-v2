@@ -15,10 +15,8 @@ class ImageController extends AbstractController {
 
   #[Route('/format.{format}/filename.{filename}',name: 'image_get')]
   public function index(Request $request, ?string $filename='', ?string $format=''): ?Response {
-    $this->im->setLocale($request->getLocale());
-    $blob = $this->im->download(filename: $filename,format: $format);
     return new Response(
-        $blob,
+        $this->im->setLocale($request->getLocale())->download(filename: $filename,format: $format),
         200,
         [
           'Content-Type' => 'application/jpg',

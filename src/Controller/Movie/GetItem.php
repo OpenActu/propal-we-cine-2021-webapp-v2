@@ -20,10 +20,7 @@ class GetItem extends AbstractController
 
     #[Route('/{id}', name: 'api_movie_GET_item', requirements:["id"=>"\d+"], methods:["GET"],options: ['expose' => true])]
     public function __invoke(Request $request, ?int $id=null): Response
-    {
-        $this->mm->setLocale($request->getLocale());
-        /** @var ?MovieDTO $movie */
-        $movie=$this->mm->find($id);
-        return new JsonResponse($movie->serializeToArray());
+    { 
+        return new JsonResponse($this->mm->setLocale($request->getLocale())->find($id)->serializeToArray());
     }
 }
