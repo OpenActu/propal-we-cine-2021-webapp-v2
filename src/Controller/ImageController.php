@@ -25,7 +25,5 @@ class ImageController extends AbstractController {
           'Content-Disposition' => 'inline; filename="file.jpg"',
         ]
       );
-
-    //return new BinaryFileResponse($blob);
   }
 }
