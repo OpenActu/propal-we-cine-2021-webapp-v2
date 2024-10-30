@@ -5,6 +5,7 @@ namespace App\Service;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class RemoteWebService {
@@ -14,36 +15,46 @@ class RemoteWebService {
   private ?string $_method=null;
   private ?SessionInterface $session=null;
 
-  public function __construct(SessionInterface $session) {
-    $this->session = $session;
+  public function __construct(RequestStack $request) {
+    try { $this->session = $request->getSession(); }
+    catch(\Exception $e) { }
   }
 
-  public function getSession(): SessionInterface {
+  public function hasSession(): bool {
+    return (null !== $this->session);
+  }
+  public function getSession(): ?SessionInterface {
     return $this->session;
   }
 
   public function setToken(?string $token): self
   {
-      $this->getSession()->set('token', $token);
-      return $this;
+    if($this->hasSession())
+          $this->getSession()->set('token', $token);
+    return $this;
   }
 
   public function getToken(): ?string
   {
-      $token = $this->getSession()->get('token',null);
-      return $token;
+    if($this->hasSession())
+      return $this->getSession()->get('token',null);
+    return null;
   }
 
   public function resetToken(): self
   {
+    if($this->hasSession())
       $this->getSession()->set('token', null);
-      return $this;
+    return $this;
   }
 
   public function hasToken(): bool
   {
+    if($this->hasToken()) {
       $token = $this->getSession()->get('token');
       return (null !== $token);
+    }
+    return false;
   }
 
   /**
