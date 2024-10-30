@@ -3,7 +3,7 @@
 namespace App\Utils;
 
 use App\Contracts\SerializerInterface;
-use FOPG\Component\UtilsBundle\Collection\Collection;
+use App\Utils\Collection\Collection;
 
 class CollectionUtils {
   public static function serialize_to_array(Collection $collection): array {

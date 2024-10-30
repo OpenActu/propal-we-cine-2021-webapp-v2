@@ -5,8 +5,8 @@ namespace App\Tests\Service\TMDB;
 use App\Tests\KernelTestCase;
 use App\Service\TMDB\Manager\MovieGenreManager;
 use App\Service\TMDB\Manager\MovieManager;
-use FOPG\Component\UtilsBundle\Collection\Collection;
-use FOPG\Component\UtilsBundle\Env\Env;
+use App\Utils\Collection\Collection;
+use App\Utils\Env\Env;
 use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 
 class MovieGenreManagerTest extends KernelTestCase {

@@ -6,9 +6,9 @@ use App\Entity\DTO\MovieGenreDTO;
 use App\Contracts\{SearchInterface, EntityDTOInterface};
 use App\Service\RemoteWebService;
 use App\Service\TMDB\Manager\Trait\MovieGenre\ConverterTrait;
-use FOPG\Component\UtilsBundle\Collection\Collection;
+use App\Utils\Collection\Collection;
 use App\Utils\Env\Env;
-use FOPG\Component\UtilsBundle\Uri\Uri;
+use App\Utils\Uri\Uri;
 use Symfony\Component\HttpFoundation\Response;
 
 class MovieGenreManager extends AbstractManager {

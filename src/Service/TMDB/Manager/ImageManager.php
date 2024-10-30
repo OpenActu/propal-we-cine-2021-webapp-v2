@@ -5,9 +5,9 @@ namespace App\Service\TMDB\Manager;
 use App\Contracts\{SearchInterface, EntityDTOInterface};
 use App\Service\RemoteWebService;
 use App\Service\TMDB\Manager\Trait\Image\ConverterTrait;
-use FOPG\Component\UtilsBundle\Collection\Collection;
+use App\Utils\Collection\Collection;
 use App\Utils\Env\Env;
-use FOPG\Component\UtilsBundle\Uri\Uri;
+use App\Utils\Uri\Uri;
 use Symfony\Component\HttpFoundation\Response;
 
 class ImageManager extends AbstractManager {

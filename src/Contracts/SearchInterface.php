@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-use FOPG\Component\UtilsBundle\Collection\Collection;
+use App\Utils\Collection\Collection;
 
 interface SearchInterface {
 

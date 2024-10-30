@@ -42,3 +42,4 @@ L'authenfication est minimaliste en l'état. Pour se connecter il suffit simplem
 # Addendum à la version de démo 
 
 1. Migration sf 5.4 vers 6.4  
+2. Suppression des références au toolkit FOPG

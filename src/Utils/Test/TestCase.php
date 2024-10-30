@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests;
+namespace App\Utils\Test;
 
 use Psr\Log\LoggerInterface;
-use App\Utils\Test\TestMessageError;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase as sfKernelTestCase;
+use PHPUnit\Framework\TestCase as SfTestCase;
 
-class KernelTestCase extends sfKernelTestCase {
+class TestCase extends SfTestCase {
+
   const PREFIX_GIVEN = "[ETANT DONNE]";
   private $_iteration_number=0;
   private $_sub_iteration_number=0;

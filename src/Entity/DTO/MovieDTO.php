@@ -4,7 +4,7 @@ namespace App\Entity\DTO;
 
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 use App\Utils\CollectionUtils;
-use FOPG\Component\UtilsBundle\Collection\Collection;
+use App\Utils\Collection\Collection;
 
 class MovieDTO extends AbstractEntityDTO {
 

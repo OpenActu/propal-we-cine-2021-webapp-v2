@@ -6,8 +6,8 @@ use App\Contracts\SearchInterface;
 use App\Entity\DTO\MovieDTO;
 use App\Service\TMDB\Manager\Trait\Movie\ConverterTrait;
 use App\Service\TMDB\Manager\Trait\SearchManagerTrait;
-use FOPG\Component\UtilsBundle\Collection\Collection;
-use FOPG\Component\UtilsBundle\String\StringFacility;
+use App\Utils\Collection\Collection;
+use App\Utils\String\StringFacility;
 use App\Utils\Env\Env;
 use Symfony\Component\HttpFoundation\Response;
 

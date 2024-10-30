@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\TMDB\Manager\{MovieGenreManager,MovieManager};
-use FOPG\Component\UtilsBundle\Collection\Collection;
+use App\Utils\Collection\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;

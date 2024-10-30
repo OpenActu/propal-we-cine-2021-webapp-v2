@@ -6,8 +6,8 @@ use App\Tests\KernelTestCase;
 use app\Entity\DTO\MovieDTO;
 use App\Service\TMDB\Manager\MovieGenreManager;
 use App\Service\TMDB\Manager\MovieManager;
-use FOPG\Component\UtilsBundle\Collection\Collection;
-use FOPG\Component\UtilsBundle\Env\Env;
+use App\Utils\Collection\Collection;
+use App\Utils\Env\Env;
 use Symfony\Bundle\FrameworkBundle\Test\TestContainer;
 
 class MovieManagerTest extends KernelTestCase {

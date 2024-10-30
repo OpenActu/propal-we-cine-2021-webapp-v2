@@ -4,7 +4,7 @@ namespace App\Service\TMDB\Manager\Trait\Movie;
 
 use App\Contracts\SearchInterface;
 use App\Entity\DTO\{CountryDTO, LanguageDTO, MovieDTO, MovieCollectionDTO, MovieGenreDTO, ProductionCompanyDTO};
-use FOPG\Component\UtilsBundle\Collection\Collection;
+use App\Utils\Collection\Collection;
 
 trait ConverterTrait {
 
