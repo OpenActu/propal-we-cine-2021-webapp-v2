@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 const DEFAULT_FORMAT='w500';
 
-const Image = ({format, filename, defaultSrc}) => {
+const Image = ({format, filename, defaultSrc,alt=""}) => {
     const [src,setSrc]=useState(null);
     const url = Routing.generate('image_get',{format:format,filename:filename});
     useEffect(() => {
@@ -17,6 +17,7 @@ const Image = ({format, filename, defaultSrc}) => {
         <img
             src={src}
             className="img-fluid img-thumbnail"
+            alt={alt}
         />
         }
         {(null===src) && 
