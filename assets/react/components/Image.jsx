@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
+import {Image as BootstrapImage} from 'react-bootstrap';
 const DEFAULT_FORMAT='w500';
 
 const Image = ({format, filename, defaultSrc,alt=""}) => {
@@ -14,14 +14,14 @@ const Image = ({format, filename, defaultSrc,alt=""}) => {
     return (
         <>
         {(null!==src) && 
-        <img
+        <BootstrapImage
             src={src}
             className="img-fluid img-thumbnail"
             alt={alt}
         />
         }
         {(null===src) && 
-        <img
+        <BootstrapImage
             src={defaultSrc}
             className="img-fluid img-thumbnail"
         />

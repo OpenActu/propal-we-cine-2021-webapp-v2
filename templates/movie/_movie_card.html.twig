@@ -4,8 +4,8 @@
     <div class="col-2">
       {% if movie.posterPath %}
       <div {{ react_component('Image/Get', { alt:movie.title, format: 'w500', filename: movie.posterPath[1:], defaultSrc: asset('build/images/file.jpg')}) }}>
-          <img src="{{asset('build/images/file.jpg')}}" class="img-fluid img-thumbnail"/>
-        </div>
+        <img src="{{asset('build/images/file.jpg')}}" class="img-fluid img-thumbnail"/>
+      </div>
       {% endif %}
     </div>
     <div class="col-10">
@@ -22,4 +22,16 @@
     &nbsp;
     </div>
   </div>
+</div>
+<div {{ react_component('Movie/GetCard', {
+  id: movie.id,
+  title: movie.title,
+  voteAverage: movie.voteAverage|number_format(1,',',''),
+  voteCount: movie.voteCount|number_format(0,'',''),
+  posterPath: movie.posterPath[1:],
+  defaultSrc: asset('build/images/file.jpg'),
+  releaseYear: movie.releaseDate|date('Y'),
+  overview: movie.overview
+  }) }}>
+  waiting...
 </div>
