@@ -1,0 +1,1 @@
+présence obligatoire pour bon fonctionnement de stimulus
