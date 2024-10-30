@@ -3,7 +3,6 @@
 namespace App\Entity\DTO;
 
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
-use App\Utils\CollectionUtils;
 use App\Utils\Collection\Collection;
 
 class MovieDTO extends AbstractEntityDTO {
@@ -107,12 +106,12 @@ class MovieDTO extends AbstractEntityDTO {
       'tagline' => $this->getTagline(),
       'video' => $this->getVideo(),
       'originalLanguage' => $this->getOriginalLanguage() ? $this->getOriginalLanguage()->serializeToArray() : null,
-      'movieGenres' => CollectionUtils::serialize_to_array($this->getMovieGenres()),
+      'movieGenres' => Collection::serialize_to_array($this->getMovieGenres()),
       'belongsToCollection' => $this->getBelongsToCollection() ? $this->getBelongsToCollection()->serializeToArray() : null,
-      'originCountries' => CollectionUtils::serialize_to_array($this->getOriginCountries()),
-      'productionCompanies' => CollectionUtils::serialize_to_array($this->getProductionCompanies()),
-      'productionCountries' => CollectionUtils::serialize_to_array($this->getProductionCountries()),
-      'spokenLanguages' => CollectionUtils::serialize_to_array($this->getSpokenLanguages()),
+      'originCountries' => Collection::serialize_to_array($this->getOriginCountries()),
+      'productionCompanies' => Collection::serialize_to_array($this->getProductionCompanies()),
+      'productionCountries' => Collection::serialize_to_array($this->getProductionCountries()),
+      'spokenLanguages' => Collection::serialize_to_array($this->getSpokenLanguages()),
     ];
   }
 }

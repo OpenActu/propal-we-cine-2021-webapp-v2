@@ -2,10 +2,11 @@
 
 namespace App\Utils\Collection;
 
+use App\Contracts\SerializerInterface;
 use App\Contracts\CollectionInterface;
-use FOPG\Component\UtilsBundle\Exception\InvalidArgumentException;
+use App\Exception\InvalidArgumentException;
 
-class Collection implements CollectionInterface, \Iterator {
+class Collection implements CollectionInterface, \Iterator, SerializerInterface {
 
   use CollectionKeyValueManagerTrait;
 
@@ -13,6 +14,18 @@ class Collection implements CollectionInterface, \Iterator {
   private $_cmpAlgorithm = null;
   private int $_current = 0;
 
+  public static function serialize_to_array(Collection $collection): array {
+    $output=[];
+    /** @var SerializerInterface $item */
+    foreach($collection as $item)
+      $output[]=$item->serializeToArray();
+    return $output;
+  }
+
+  public function serializeToArray(): array {
+    return self::serialize_to_array($this);
+  }
+  
   /**
    * Constructeur
    *
