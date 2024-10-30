@@ -8,7 +8,7 @@ use App\Service\TMDB\Manager\Trait\Movie\ConverterTrait;
 use App\Service\TMDB\Manager\Trait\SearchManagerTrait;
 use FOPG\Component\UtilsBundle\Collection\Collection;
 use FOPG\Component\UtilsBundle\String\StringFacility;
-use FOPG\Component\UtilsBundle\Env\Env;
+use App\Utils\Env\Env;
 use Symfony\Component\HttpFoundation\Response;
 
 class MovieManager extends AbstractManager {

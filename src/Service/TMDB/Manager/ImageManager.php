@@ -6,7 +6,7 @@ use App\Contracts\{SearchInterface, EntityDTOInterface};
 use App\Service\RemoteWebService;
 use App\Service\TMDB\Manager\Trait\Image\ConverterTrait;
 use FOPG\Component\UtilsBundle\Collection\Collection;
-use FOPG\Component\UtilsBundle\Env\Env;
+use App\Utils\Env\Env;
 use FOPG\Component\UtilsBundle\Uri\Uri;
 use Symfony\Component\HttpFoundation\Response;
 
