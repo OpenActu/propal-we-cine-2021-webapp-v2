@@ -106,12 +106,12 @@ class MovieDTO extends AbstractEntityDTO {
       'tagline' => $this->getTagline(),
       'video' => $this->getVideo(),
       'originalLanguage' => $this->getOriginalLanguage() ? $this->getOriginalLanguage()->serializeToArray() : null,
-      'movieGenres' => Collection::serialize_to_array($this->getMovieGenres()),
+      'movieGenres' => $this->getMovieGenres()->serializeToArray(),
       'belongsToCollection' => $this->getBelongsToCollection() ? $this->getBelongsToCollection()->serializeToArray() : null,
-      'originCountries' => Collection::serialize_to_array($this->getOriginCountries()),
-      'productionCompanies' => Collection::serialize_to_array($this->getProductionCompanies()),
-      'productionCountries' => Collection::serialize_to_array($this->getProductionCountries()),
-      'spokenLanguages' => Collection::serialize_to_array($this->getSpokenLanguages()),
+      'originCountries' => $this->getOriginCountries()->serializeToArray(),
+      'productionCompanies' => $this->getProductionCompanies()->serializeToArray(),
+      'productionCountries' => $this->getProductionCountries()->serializeToArray(),
+      'spokenLanguages' => $this->getSpokenLanguages()->serializeToArray(),
     ];
   }
 }
