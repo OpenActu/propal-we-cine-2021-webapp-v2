@@ -3,10 +3,9 @@
     {% for movie in highlights %}
       {% if movie.posterPath %}
       <div class="col-2">
-        <img
-          src="{{path('image_get', {format: 'w500', filename: movie.posterPath[1:]})}}"
-          class="img-fluid img-thumbnail"
-        />
+        <div {{ react_component('Image/Get', { format: 'w500', filename: movie.posterPath[1:], defaultSrc: asset('build/images/file.jpg')}) }}>
+          <img src="{{asset('build/images/file.jpg')}}" class="img-fluid img-thumbnail"/>
+        </div>
       </div>
       {% endif %}
     {% endfor %}

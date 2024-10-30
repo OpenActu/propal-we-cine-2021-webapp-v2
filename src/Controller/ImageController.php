@@ -13,7 +13,7 @@ class ImageController extends AbstractController {
 
   public function __construct(private ImageManager $im) { }
 
-  #[Route('/format.{format}/filename.{filename}',name: 'image_get')]
+  #[Route('/format.{format}/filename.{filename}',name: 'image_get', options: ['expose' => true])]
   public function index(Request $request, ?string $filename='', ?string $format=''): ?Response {
     return new Response(
         $this->im->setLocale($request->getLocale())->download(filename: $filename,format: $format),

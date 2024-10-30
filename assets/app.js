@@ -1,3 +1,5 @@
+import { registerReactControllerComponents } from '@symfony/ux-react';
+import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -41,3 +43,5 @@ $(document).ready(() => {
     }
   });
 });
+
+registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));
