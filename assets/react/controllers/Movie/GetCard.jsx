@@ -62,25 +62,23 @@ export default function ({movieValue, defaultSrc}) {
                     </h5>
                 </Card.Header>
                 
-                    <div className="col-2">
-                        <Image format="w500" filename={movie.posterPath.substr(1)} alt={movie.title} defaultSrc={defaultSrc}/>
-                    </div>
-                    <div className="col-10">
-                        <Card.Body> 
-                            <h5>
-                                <Card.Title>{releaseDate.toLocaleDateString(DEFAULT_LOCALE,{year: 'numeric'})}</Card.Title>
-                            </h5>
-                            <Card.Text>{movie.overview}</Card.Text>
-                            <Button variant="primary" onClick={handleClick} className="open-modal-movie">
-                                {loading && 
-                                <Spinner animation="border" role="status" className="spinner-border spinner-border-sm"></Spinner>
-                                }
-                                {trans(MOVIE_INDEX_SHOW_DETAILS)}
-                            </Button>
-                        </Card.Body>
-                    </div>
-                    
-
+                <div className="col-2">
+                    <Image format="w500" filename={movie.posterPath.substr(1)} alt={movie.title} defaultSrc={defaultSrc}/>
+                </div>
+                <div className="col-10">
+                    <Card.Body> 
+                        <h5>
+                            <Card.Title>{releaseDate.toLocaleDateString(DEFAULT_LOCALE,{year: 'numeric'})}</Card.Title>
+                        </h5>
+                        <Card.Text>{movie.overview}</Card.Text>
+                        <Button variant="primary" onClick={handleClick} className="open-modal-movie">
+                            {loading && 
+                            <Spinner animation="border" role="status" className="spinner-border spinner-border-sm"></Spinner>
+                            }
+                            {trans(MOVIE_INDEX_SHOW_DETAILS)}
+                        </Button>
+                    </Card.Body>
+                </div>
             </div>
         </Card>
     );
