@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/movie')]
+#[Route('/api/movie')]
 class SearchCollection extends AbstractController
 {
     public function __construct(

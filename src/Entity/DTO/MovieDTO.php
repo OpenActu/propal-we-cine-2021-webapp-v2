@@ -2,9 +2,39 @@
 
 namespace App\Entity\DTO;
 
+use App\Controller\Movie\GetItem;
+use App\Controller\Movie\SearchCollection;
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 use App\Utils\Collection\Collection;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\OpenApi\Model\RequestBody;
+use ApiPlatform\Metadata\Parameters;
+use ApiPlatform\Metadata\QueryParameter;
 
+#[ApiResource(
+  operations: [
+    new Get(
+      uriTemplate: '/movie/{id}',
+      controller: GetItem::class
+    ),
+    new GetCollection(
+      uriTemplate: '/movie/search/',
+      controller: SearchCollection::class,
+      parameters:
+        new Parameters([
+          new QueryParameter(key: 'term', description: 'Term to find',required: true),
+        ])
+      ,
+      openapi: new Operation(
+        summary: 'Search movie from remote website',
+        description: 'Search movie from remote website'
+      )
+    )
+  ]
+)]
 class MovieDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
