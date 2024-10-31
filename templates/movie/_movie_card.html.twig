@@ -1,37 +1,6 @@
-<div class="card">
-  <div class="row g-0">
-    <h5 class="card-header">{{movie.title}} <span class="badge bg-danger">{{movie.voteAverage|number_format(1,',','')}}</span> ({{movie.voteCount|number_format(0,'','')}} {{'movie.index.vote_count'|trans}})</h5>
-    <div class="col-2">
-      {% if movie.posterPath %}
-      <div {{ react_component('Image/Get', { alt:movie.title, format: 'w500', filename: movie.posterPath[1:], defaultSrc: asset('build/images/file.jpg')}) }}>
-        <img src="{{asset('build/images/file.jpg')}}" class="img-fluid img-thumbnail"/>
-      </div>
-      {% endif %}
-    </div>
-    <div class="col-10">
-      <div class="card-body">
-        <h5 class="card-title">{{movie.releaseDate|date('Y')}}</h5>
-        <p class="card-text">{{movie.overview}}</p>
-        <button class="btn btn-primary open-modal-movie" data-movie-id="{{movie.id}}">
-          <span class="spinner-border spinner-border-sm hide open-modal-movie-spinner" role="status" aria-hidden="true"></span>
-          {{'movie.index.show_details'|trans}}
-        </button>
-      </div>
-    </div>
-    <div class="col-12">
-    &nbsp;
-    </div>
-  </div>
-</div>
 <div {{ react_component('Movie/GetCard', {
-  id: movie.id,
-  title: movie.title,
-  voteAverage: movie.voteAverage|number_format(1,',',''),
-  voteCount: movie.voteCount|number_format(0,'',''),
-  posterPath: movie.posterPath[1:],
+  movieValue: movie|serialize(format='json'),
   defaultSrc: asset('build/images/file.jpg'),
-  releaseYear: movie.releaseDate|date('Y'),
-  overview: movie.overview
   }) }}>
   waiting...
 </div>
