@@ -63,7 +63,7 @@ export default function ({movieValue, defaultSrc}) {
                 </Card.Header>
                 
                 <div className="col-2">
-                    <Image format="w500" filename={movie.posterPath.substr(1)} alt={movie.title} defaultSrc={defaultSrc}/>
+                    <Image format="w500" filename={movie.poster.filename.substr(1)} alt={movie.title} defaultSrc={defaultSrc}/>
                 </div>
                 <div className="col-10">
                     <Card.Body> 

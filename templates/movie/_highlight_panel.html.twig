@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="row">
     {% for movie in highlights %}
-      {% if movie.posterPath %}
+      {% if movie.poster %}
       <div class="col-2">
-        <div {{ react_component('Image/Get', { format: 'w500', filename: movie.posterPath[1:], defaultSrc: asset('build/images/file.jpg')}) }}>
+        <div {{ react_component('Image/Get', { format: 'w500', filename: movie.poster.filename[1:], defaultSrc: asset('build/images/file.jpg')}) }}>
           <img src="{{asset('build/images/file.jpg')}}" class="img-fluid img-thumbnail"/>
         </div>
       </div>
