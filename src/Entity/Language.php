@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Contracts\Entity\LanguageInterface;
 use App\Entity\Trait\Language\ReceiverDTOTrait;
 use App\Repository\LanguageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Contracts\{EntityInterface, ReceiverDTOInterface};
 
 #[ORM\Entity(repositoryClass: LanguageRepository::class)]
-class Language implements ReceiverDTOInterface, EntityInterface
+class Language implements ReceiverDTOInterface, EntityInterface, LanguageInterface
 {
     use ReceiverDTOTrait;
     

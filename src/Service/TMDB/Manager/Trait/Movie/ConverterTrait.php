@@ -58,11 +58,11 @@ trait ConverterTrait {
 
     if(!empty($movie['genre_ids']))
       foreach($movie['genre_ids'] as $movieGenreId)
-        $entity->addMovieGenre(new MovieGenreDTO(id: $movieGenreId));
+        $entity->addGenre(new MovieGenreDTO(id: $movieGenreId));
 
     if(!empty($movie['genres']))
       foreach($movie['genres'] as $genre)
-        $entity->addMovieGenre(new MovieGenreDTO(id: $genre['id'],name: $genre['name']));
+        $entity->addGenre(new MovieGenreDTO(id: $genre['id'],name: $genre['name']));
 
     if(!empty($movie['origin_country']))
       foreach($movie['origin_country'] as $code)

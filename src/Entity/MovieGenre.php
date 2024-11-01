@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Contracts\Entity\MovieGenreInterface;
 use App\Entity\Trait\MovieGenre\ReceiverDTOTrait;
 use App\Repository\MovieGenreRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Contracts\{EntityInterface, ReceiverDTOInterface};
 
 #[ORM\Entity(repositoryClass: MovieGenreRepository::class)]
-class MovieGenre implements ReceiverDTOInterface, EntityInterface
+class MovieGenre implements ReceiverDTOInterface, EntityInterface, MovieGenreInterface
 {
     use ReceiverDTOTrait;
     

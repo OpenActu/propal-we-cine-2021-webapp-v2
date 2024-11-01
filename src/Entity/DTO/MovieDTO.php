@@ -57,14 +57,14 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
     string $title,
     ?string $posterPath=null,
     ?string $backdropPath=null,
-    private bool $adult=false,
+    private ?bool $adult=null,
     ?string $originalLanguage=null,
     private ?string $originalTitle=null,
     private ?string $overview=null,
     private float $popularity=0,
     private ?\DateTime $releaseDate=null,
     private float $voteAverage=0,
-    private float $voteCount=0,
+    private int $voteCount=0,
     private ?int $budget=null,
     private ?string $homepage=null,
     private ?string $imdbId=null,
@@ -72,7 +72,7 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
     private ?int $runtime=null,
     private ?string $status=null,
     private ?string $tagline=null,
-    private bool $video=false
+    private ?bool $video=null
   ){
     $this->spokenLanguages=new Collection();
     $this->movieGenres=new Collection();
@@ -90,7 +90,7 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
     }
   }
 
-  public function getVideo(): bool { return $this->video; }
+  public function isVideo(): ?bool { return $this->video; }
   public function getTagline(): ?string { return $this->tagline; }
   public function getStatus(): ?string { return $this->status; }
   public function getRuntime(): ?int { return $this->runtime; }
@@ -100,7 +100,7 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
   public function getBudget(): ?int { return $this->budget; }
   public function setBelongsToCollection(MovieCollectionInterface $collection): EntityInterface { $this->belongsToCollection=$collection; return $this; }
   public function getBelongsToCollection(): ?MovieCollectionInterface { return $this->belongsToCollection; }
-  public function getAdult(): bool { return $this->adult; }
+  public function isAdult(): ?bool { return $this->adult; }
   public function setOriginalLanguage(LanguageInterface $language): EntityInterface { $this->originalLanguage = $language; return $this; }
   public function getOriginalLanguage(): ?LanguageInterface { return $this->originalLanguage; }
   public function getOriginalTitle(): ?string { return $this->originalTitle; }
@@ -109,9 +109,9 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
   public function getReleaseDate(): ?\DateTime { return $this->releaseDate; }
   public function getTitle(): ?string { return $this->getName(); }
   public function getVoteAverage(): float { return $this->voteAverage; }
-  public function getVoteCount(): float { return $this->voteCount; }
-  public function addMovieGenre(MovieGenreInterface $movieGenre): EntityInterface { $this->movieGenres->add($movieGenre); return $this; }
-  public function getMovieGenres(): Collection { return $this->movieGenres; }
+  public function getVoteCount(): int { return $this->voteCount; }
+  public function addGenre(MovieGenreInterface $movieGenre): EntityInterface { $this->movieGenres->add($movieGenre); return $this; }
+  public function getGenres(): Collection { return $this->movieGenres; }
   public function addOriginCountry(CountryInterface $country): EntityInterface { $this->originCountries->add($country); return $this; }
   public function getOriginCountries(): Collection { return $this->originCountries; }
   public function addProductionCompany(ProductionCompanyInterface $pc): EntityInterface { $this->productionCompanies->add($pc); return $this; }

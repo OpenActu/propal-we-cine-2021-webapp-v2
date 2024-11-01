@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Contracts\CollectionInterface;
+use App\Contracts\Entity\{CountryInterface,LanguageInterface,MovieCollectionInterface,MovieGenreInterface,MovieInterface,ProductionCompanyInterface};
 use App\Entity\DTO\MovieDTO;
 use App\Entity\Trait\Movie\ReceiverDTOTrait;
 use ApiPlatform\Metadata\ApiResource;
@@ -14,7 +16,7 @@ use App\Contracts\{EntityInterface, ReceiverDTOInterface};
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource]
-class Movie implements ReceiverDTOInterface, EntityInterface
+class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
 {
     use ReceiverDTOTrait;
 
@@ -38,17 +40,17 @@ class Movie implements ReceiverDTOInterface, EntityInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $overview = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?float $popularity = null;
+    #[ORM\Column(nullable: false)]
+    private float $popularity = 0;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $releaseDate = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?float $voteAverage = null;
+    #[ORM\Column(nullable: false)]
+    private float $voteAverage = 0;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $voteCount = null;
+    #[ORM\Column(nullable: false)]
+    private int $voteCount = 0;
 
     #[ORM\Column(nullable: true)]
     private ?int $budget = null;
@@ -86,10 +88,41 @@ class Movie implements ReceiverDTOInterface, EntityInterface
     #[ORM\ManyToMany(targetEntity: Country::class)]
     private Collection $originCountries;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $runtime = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $homepage = null;
+
+    #[ORM\ManyToOne]
+    private ?MovieCollection $belongsToCollection = null;
+
+    /**
+     * @var Collection<int, ProductionCompany>
+     */
+    #[ORM\ManyToMany(targetEntity: ProductionCompany::class)]
+    private Collection $productionCompanies;
+
+    /**
+     * @var Collection<int, Country>
+     */
+    #[ORM\ManyToMany(targetEntity: Country::class)]
+    #[ORM\JoinTable(name: 'movie_production_country')]
+    private Collection $productionCountries;
+
+    /**
+     * @var Collection<int, Language>
+     */
+    #[ORM\ManyToMany(targetEntity: Language::class)]
+    private Collection $spokenLanguages;
+
     public function __construct()
     {
         $this->genres = new ArrayCollection();
         $this->originCountries = new ArrayCollection();
+        $this->productionCompanies = new ArrayCollection();
+        $this->productionCountries = new ArrayCollection();
+        $this->spokenLanguages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,12 +190,12 @@ class Movie implements ReceiverDTOInterface, EntityInterface
         return $this;
     }
 
-    public function getPopularity(): ?float
+    public function getPopularity(): float
     {
         return $this->popularity;
     }
 
-    public function setPopularity(?float $popularity): static
+    public function setPopularity(float $popularity): static
     {
         $this->popularity = $popularity;
 
@@ -181,24 +214,24 @@ class Movie implements ReceiverDTOInterface, EntityInterface
         return $this;
     }
 
-    public function getVoteAverage(): ?float
+    public function getVoteAverage(): float
     {
         return $this->voteAverage;
     }
 
-    public function setVoteAverage(?float $voteAverage): static
+    public function setVoteAverage(float $voteAverage): static
     {
         $this->voteAverage = $voteAverage;
 
         return $this;
     }
 
-    public function getVoteCount(): ?int
+    public function getVoteCount(): int
     {
         return $this->voteCount;
     }
 
-    public function setVoteCount(?int $voteCount): static
+    public function setVoteCount(int $voteCount): static
     {
         $this->voteCount = $voteCount;
 
@@ -289,12 +322,12 @@ class Movie implements ReceiverDTOInterface, EntityInterface
         return $this;
     }
 
-    public function getOriginalLanguage(): ?Language
+    public function getOriginalLanguage(): ?LanguageInterface
     {
         return $this->originalLanguage;
     }
 
-    public function setOriginalLanguage(?Language $originalLanguage): static
+    public function setOriginalLanguage(?LanguageInterface $originalLanguage): static
     {
         $this->originalLanguage = $originalLanguage;
 
@@ -302,14 +335,14 @@ class Movie implements ReceiverDTOInterface, EntityInterface
     }
 
     /**
-     * @return Collection<int, MovieGenre>
+     * @return CollectionInterface<int, MovieGenreInterface>
      */
-    public function getGenres(): Collection
+    public function getGenres(): CollectionInterface
     {
         return $this->genres;
     }
 
-    public function addGenre(MovieGenre $genre): static
+    public function addGenre(MovieGenreInterface $genre): static
     {
         if (!$this->genres->contains($genre)) {
             $this->genres->add($genre);
@@ -318,7 +351,7 @@ class Movie implements ReceiverDTOInterface, EntityInterface
         return $this;
     }
 
-    public function removeGenre(MovieGenre $genre): static
+    public function removeGenre(MovieGenreInterface $genre): static
     {
         $this->genres->removeElement($genre);
 
@@ -326,14 +359,14 @@ class Movie implements ReceiverDTOInterface, EntityInterface
     }
 
     /**
-     * @return Collection<int, Country>
+     * @return CollectionInterface<int, CountryInterface>
      */
-    public function getOriginCountries(): Collection
+    public function getOriginCountries(): CollectionInterface
     {
         return $this->originCountries;
     }
 
-    public function addOriginCountry(Country $originCountry): static
+    public function addOriginCountry(CountryInterface $originCountry): static
     {
         if (!$this->originCountries->contains($originCountry)) {
             $this->originCountries->add($originCountry);
@@ -342,9 +375,117 @@ class Movie implements ReceiverDTOInterface, EntityInterface
         return $this;
     }
 
-    public function removeOriginCountry(Country $originCountry): static
+    public function removeOriginCountry(CountryInterface $originCountry): static
     {
         $this->originCountries->removeElement($originCountry);
+
+        return $this;
+    }
+
+    public function getRuntime(): ?int
+    {
+        return $this->runtime;
+    }
+
+    public function setRuntime(?int $runtime): static
+    {
+        $this->runtime = $runtime;
+
+        return $this;
+    }
+
+    public function getHomepage(): ?string
+    {
+        return $this->homepage;
+    }
+
+    public function setHomepage(?string $homepage): static
+    {
+        $this->homepage = $homepage;
+
+        return $this;
+    }
+
+    public function getBelongsToCollection(): ?MovieCollectionInterface
+    {
+        return $this->belongsToCollection;
+    }
+
+    public function setBelongsToCollection(?MovieCollectionInterface $belongsToCollection): static
+    {
+        $this->belongsToCollection = $belongsToCollection;
+
+        return $this;
+    }
+
+    /**
+     * @return CollectionInterface<int, ProductionCompanyInterface>
+     */
+    public function getProductionCompanies(): CollectionInterface
+    {
+        return $this->productionCompanies;
+    }
+
+    public function addProductionCompany(ProductionCompanyInterface $productionCompany): static
+    {
+        if (!$this->productionCompanies->contains($productionCompany)) {
+            $this->productionCompanies->add($productionCompany);
+        }
+
+        return $this;
+    }
+
+    public function removeProductionCompany(ProductionCompanyInterface $productionCompany): static
+    {
+        $this->productionCompanies->removeElement($productionCompany);
+
+        return $this;
+    }
+
+    /**
+     * @return CollectionInterface<int, CountryInterface>
+     */
+    public function getProductionCountries(): CollectionInterface
+    {
+        return $this->productionCountries;
+    }
+
+    public function addProductionCountry(CountryInterface $productionCountry): static
+    {
+        if (!$this->productionCountries->contains($productionCountry)) {
+            $this->productionCountries->add($productionCountry);
+        }
+
+        return $this;
+    }
+
+    public function removeProductionCountry(CountryInterface $productionCountry): static
+    {
+        $this->productionCountries->removeElement($productionCountry);
+
+        return $this;
+    }
+
+    /**
+     * @return CollectionInterface<int, LanguageInterface>
+     */
+    public function getSpokenLanguages(): CollectionInterface
+    {
+        return $this->spokenLanguages;
+    }
+
+    public function addSpokenLanguage(LanguageInterface $spokenLanguage): static
+    {
+        if (!$this->spokenLanguages->contains($spokenLanguage)) {
+            $this->spokenLanguages->add($spokenLanguage);
+        }
+
+        return $this;
+    }
+
+    public function removeSpokenLanguage(LanguageInterface $spokenLanguage): static
+    {
+        $this->spokenLanguages->removeElement($spokenLanguage);
 
         return $this;
     }
