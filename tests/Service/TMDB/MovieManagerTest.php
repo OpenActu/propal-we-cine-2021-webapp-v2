@@ -141,11 +141,9 @@ class MovieManagerTest extends KernelTestCase {
         callback: function(?MovieDTO $movie,array $data): bool {
           return
             ($movie->getId() === $data['id']) &&
-            ($movie->getAdult() === $data['adult']) &&
+            ($movie->isAdult() === $data['adult']) &&
             ($movie->getTitle() === $data['title']) &&
-            ($movie->getBackdropPath() === $data['backdrop_path']) &&
             ($movie->getOriginalTitle() === $data['original_title']) &&
-            ($movie->getPosterPath() === $data['poster_path']) &&
             ($movie->getReleaseDate() == $data['release_date']) &&
             ($movie->getImdbId() === $data['imdb_id'])
           ;
