@@ -2,12 +2,14 @@
 
 namespace App\Entity\DTO;
 
+use App\Entity\Trait\Language\SerializerTrait;
 use App\Entity\DTO\Trait\{IdentifierTrait,ReferenceTrait};
 
 class LanguageDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
   use ReferenceTrait;
+  use SerializerTrait;
 
   public function __construct(
     private ?string $englishName=null,
@@ -19,12 +21,4 @@ class LanguageDTO extends AbstractEntityDTO {
   }
 
   public function getEnglishName(): ?string { return $this->englishName; }
-
-  public function serializeToArray(): array {
-    return [
-      'code' => $this->getCode(),
-      'name' => $this->getName(),
-      'englishName' => $this->getEnglishName(),
-    ];
-  }
 }

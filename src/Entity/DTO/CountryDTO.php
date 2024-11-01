@@ -2,12 +2,14 @@
 
 namespace App\Entity\DTO;
 
+use App\Entity\Trait\Country\SerializerTrait;
 use App\Entity\DTO\Trait\{IdentifierTrait,ReferenceTrait};
 
 class CountryDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
   use ReferenceTrait;
+  use SerializerTrait;
 
   public function __construct(
     ?string $code=null,
@@ -17,11 +19,4 @@ class CountryDTO extends AbstractEntityDTO {
     $this->setName($name);
   }
   public function getISO_3166_1(): ?string { return $this->getCode(); }
-
-  public function serializeToArray(): array {
-    return [
-      'code' => $this->getCode(),
-      'name' => $this->getName(),
-    ];
-  }
 }

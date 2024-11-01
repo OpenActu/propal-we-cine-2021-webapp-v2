@@ -2,12 +2,14 @@
 
 namespace App\Entity\DTO;
 
+use App\Entity\Trait\MovieCollection\SerializerTrait;
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 
 class MovieCollectionDTO extends AbstractEntityDTO {
 
   use IdentifierTrait;
   use PathTrait;
+  use SerializerTrait;
 
   public function __construct(
     int $id,
@@ -19,12 +21,5 @@ class MovieCollectionDTO extends AbstractEntityDTO {
     $this->setId($id);
     $this->setBackdropPath($backdropPath);
     $this->setPosterPath($posterPath);
-  }
-
-  public function serializeToArray(): array {
-    return [
-      'id' => $this->getId(),
-      'name' => $this->getName(),
-    ];
   }
 }
