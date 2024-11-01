@@ -18,6 +18,8 @@ docker exec -ti propal-we-cine-2021-webapp-instance /bin/bash
 composer install
 yarn install
 php bin/console assets:install --symlink public
+php bin/console doctrine:database:create 
+php bin/console doctrine:migration:migrate
 yarn watch
 ```
 

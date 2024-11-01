@@ -7,3 +7,7 @@ services:
         public: true
         autowire: true
         autoconfigure: true
+    App\Service\Minio\Client:
+        public: true
+        autowire: true
+        autoconfigure: true
