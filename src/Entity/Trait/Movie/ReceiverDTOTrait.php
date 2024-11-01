@@ -28,8 +28,10 @@ trait ReceiverDTOTrait {
             'setTagline' => 'tagline',
             'setVideo' => 'video',
         ];
-        foreach($mapper as $method => $parameter)
-            $this->$method($obj[$parameter]??null);
+        foreach($mapper as $method => $parameter) 
+            if(isset($obj[$parameter]) && (null!==$obj[$parameter]))
+                $this->$method($obj[$parameter]);
+            
         if(!empty($obj['releaseDate']))
             $this->setReleaseDate(new \DateTime($obj['releaseDate']));
         if(!empty($obj['budget']))

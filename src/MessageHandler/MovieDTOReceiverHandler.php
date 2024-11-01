@@ -28,8 +28,8 @@ class MovieDTOReceiverHandler {
         if(null === $movie) {
             $movie = new Movie();
             $this->em->persist($movie);
-            $movie->populateFromArray($movieDTO);
         }
+        $movie->populateFromArray($movieDTO);
 
         if(!empty($movieDTO['originalLanguage']) && is_array($movieDTO['originalLanguage'])) {
             $languageDTO = $movieDTO['originalLanguage'];
@@ -37,8 +37,8 @@ class MovieDTOReceiverHandler {
             if(null===$language) {
                 $language = new Language();
                 $this->em->persist($language);
-                $language->populateFromArray($languageDTO);
             }  
+            $language->populateFromArray($languageDTO);
             $movie->setOriginalLanguage($language);    
         }
         if(!empty($movieDTO['movieGenres']) && is_array($movieDTO['movieGenres']) && count($movieDTO['movieGenres'])) {
@@ -48,8 +48,8 @@ class MovieDTOReceiverHandler {
                 if(null===$movieGenre) {
                     $movieGenre = new MovieGenre();
                     $this->em->persist($movieGenre);
-                    $movieGenre->populateFromArray($movieGenreDTO);
                 }
+                $movieGenre->populateFromArray($movieGenreDTO);
                 $movie->addGenre($movieGenre);
             }
         }
@@ -61,8 +61,8 @@ class MovieDTOReceiverHandler {
                 if(null === $country) {
                     $country = new Country();
                     $this->em->persist($country);
-                    $country->populateFromArray($originCountryDTO);
                 }
+                $country->populateFromArray($originCountryDTO);
                 $movie->addOriginCountry($country);
             }
         }

@@ -13,8 +13,10 @@ trait ReceiverDTOTrait {
     }
 
     public function populateFromArray(array $obj): EntityInterface {
-        $this->setTmdbId($obj['id']);
-        $this->setName($obj['name']??null);
+        if(!empty($obj['id']))
+            $this->setTmdbId($obj['id']);
+        if(!empty($obj['name']))
+            $this->setName($obj['name']??null);
         return $this;
     }
 

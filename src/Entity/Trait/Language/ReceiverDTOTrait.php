@@ -13,9 +13,12 @@ trait ReceiverDTOTrait {
     }
 
     public function populateFromArray(array $obj): EntityInterface {
-        $this->setCode($obj['code']);
-        $this->setName($obj['name']??null);
-        $this->setEnglishName($obj['englishName']??null);
+        if(!empty($obj['code']))
+            $this->setCode($obj['code']);
+        if(!empty($obj['name']))
+            $this->setName($obj['name']??null);
+        if(!empty($obj['englishName']))
+            $this->setEnglishName($obj['englishName']??null);
         return $this;
     }
 

@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Contracts\Entity\CountryInterface;
 use App\Entity\Trait\Country\ReceiverDTOTrait;
 use App\Repository\CountryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Contracts\{EntityInterface, ReceiverDTOInterface};
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
-class Country implements ReceiverDTOInterface, EntityInterface
+class Country implements ReceiverDTOInterface, EntityInterface, CountryInterface
 {
     use ReceiverDTOTrait;
 

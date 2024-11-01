@@ -12,6 +12,7 @@ interface MovieInterface {
     public function getImdbId(): ?string;
     public function getHomepage(): ?string;
     public function getBudget(): ?int;
+    public function getTmdbId(): ?int;
     public function setBelongsToCollection(MovieCollectionInterface $collection): EntityInterface;
     public function getBelongsToCollection(): ?MovieCollectionInterface;
     public function isAdult(): ?bool;

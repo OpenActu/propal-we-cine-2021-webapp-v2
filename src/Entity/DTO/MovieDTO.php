@@ -89,7 +89,7 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
       $this->setOriginalLanguage(new LanguageDTO(code: $originalLanguage));
     }
   }
-
+  public function getTmdbId(): ?int { return $this->id; }
   public function isVideo(): ?bool { return $this->video; }
   public function getTagline(): ?string { return $this->tagline; }
   public function getStatus(): ?string { return $this->status; }
