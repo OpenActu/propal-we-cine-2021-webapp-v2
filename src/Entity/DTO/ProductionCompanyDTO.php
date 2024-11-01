@@ -20,7 +20,8 @@ class ProductionCompanyDTO extends AbstractEntityDTO {
   ) {
     $this->setId($id);
     $this->setName($name);
-    $this->setLogoPath($logoPath);
+    if($logoPath)
+      $this->setLogo(new ImageDTO($logoPath));
   }
 
   public function setOriginCountry(CountryDTO $country): static { $this->originCountry=$country; return $this; }

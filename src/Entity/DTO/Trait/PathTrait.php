@@ -2,15 +2,16 @@
 
 namespace App\Entity\DTO\Trait;
 
-trait PathTrait {
-  private ?string $posterPath=null;
-  private ?string $backdropPath=null;
-  private ?string $logoPath=null;
-  public function setLogoPath(?string $logoPath): static { $this->logoPath = $logoPath; return $this; }
-  public function getLogoPath(): ?string { return $this->logoPath; }
-  public function setPosterPath(?string $posterPath): static { $this->posterPath = $posterPath; return $this; }
-  public function getPosterPath(): ?string { return $this->posterPath; }
-  public function setBackdropPath(?string $backdropPath): static { $this->backdropPath = $backdropPath; return $this; }
-  public function getBackdropPath(): ?string { return $this->backdropPath; }
+use App\Contracts\DocumentInterface;
 
+trait PathTrait {
+  private ?DocumentInterface $poster=null;
+  private ?DocumentInterface $backdrop=null;
+  private ?DocumentInterface $logo=null;
+  public function setLogo(DocumentInterface $document): static { $this->logo = $document; return $this; }
+  public function getLogo(): ?DocumentInterface { return $this->logo; }
+  public function setPoster(DocumentInterface $poster): static { $this->poster = $poster; return $this; }
+  public function getPoster(): ?DocumentInterface { return $this->poster; }
+  public function setBackdrop(DocumentInterface $backdrop): static { $this->backdrop = $backdrop; return $this; }
+  public function getBackdrop(): ?DocumentInterface { return $this->backdrop; }
 }

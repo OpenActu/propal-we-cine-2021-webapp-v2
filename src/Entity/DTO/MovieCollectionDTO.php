@@ -19,7 +19,9 @@ class MovieCollectionDTO extends AbstractEntityDTO {
   ){
     $this->setName($name);
     $this->setId($id);
-    $this->setBackdropPath($backdropPath);
-    $this->setPosterPath($posterPath);
+    if($backdropPath)
+      $this->setBackdrop(new ImageDTO($backdropPath));
+    if($posterPath)
+      $this->setPoster(new ImageDTO($posterPath));
   }
 }

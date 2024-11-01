@@ -30,6 +30,8 @@ trait SerializerTrait {
       'productionCompanies' => $this->getProductionCompanies()->serializeToArray(),
       'productionCountries' => $this->getProductionCountries()->serializeToArray(),
       'spokenLanguages' => $this->getSpokenLanguages()->serializeToArray(),
+      'poster' => $this->getPoster()?$this->getPoster()->serializeToArray():null,
+      'backdrop' => $this->getBackdrop()?$this->getBackdrop()->serializeToArray():null,
     ];
   }
 }

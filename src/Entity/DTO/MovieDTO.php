@@ -79,8 +79,10 @@ class MovieDTO extends AbstractEntityDTO {
     $this->productionCountries=new Collection();
     $this->setName($title);
     $this->setId($id);
-    $this->setBackdropPath($backdropPath);
-    $this->setPosterPath($posterPath);
+    if($backdropPath)
+      $this->setBackdrop(new ImageDTO(filename: $backdropPath));
+    if($posterPath)
+      $this->setPoster(new ImageDTO(filename: $posterPath));
     if(!empty($originalLanguage)) {
       $this->setOriginalLanguage(new LanguageDTO(code: $originalLanguage));
     }
