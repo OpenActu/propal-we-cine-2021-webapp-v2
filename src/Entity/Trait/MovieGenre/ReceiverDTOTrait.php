@@ -14,7 +14,7 @@ trait ReceiverDTOTrait {
 
     public function populateFromArray(array $obj): EntityInterface {
         $this->setTmdbId($obj['id']);
-        $this->setName($obj['name']);
+        $this->setName($obj['name']??null);
         return $this;
     }
 
