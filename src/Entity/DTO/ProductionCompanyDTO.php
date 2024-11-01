@@ -2,10 +2,11 @@
 
 namespace App\Entity\DTO;
 
+use App\Contracts\Entity\ProductionCompanyInterface;
 use App\Entity\Trait\ProductionCompany\SerializerTrait;
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 
-class ProductionCompanyDTO extends AbstractEntityDTO {
+class ProductionCompanyDTO extends AbstractEntityDTO implements ProductionCompanyInterface {
 
   use IdentifierTrait;
   use PathTrait;

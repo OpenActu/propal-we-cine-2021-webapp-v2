@@ -2,10 +2,11 @@
 
 namespace App\Entity\DTO;
 
+use App\Contracts\Entity\MovieGenreInterface;
 use App\Entity\Trait\MovieGenre\SerializerTrait;
 use App\Entity\DTO\Trait\IdentifierTrait;
 
-class MovieGenreDTO extends AbstractEntityDTO {
+class MovieGenreDTO extends AbstractEntityDTO implements MovieGenreInterface {
 
   use IdentifierTrait;
   use SerializerTrait;

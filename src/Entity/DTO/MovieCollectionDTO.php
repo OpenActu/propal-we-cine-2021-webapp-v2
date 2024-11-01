@@ -2,10 +2,11 @@
 
 namespace App\Entity\DTO;
 
+use App\Contracts\Entity\MovieCollectionInterface;
 use App\Entity\Trait\MovieCollection\SerializerTrait;
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
 
-class MovieCollectionDTO extends AbstractEntityDTO {
+class MovieCollectionDTO extends AbstractEntityDTO implements MovieCollectionInterface {
 
   use IdentifierTrait;
   use PathTrait;

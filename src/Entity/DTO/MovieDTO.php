@@ -2,6 +2,8 @@
 
 namespace App\Entity\DTO;
 
+use App\Contracts\EntityInterface;
+use App\Contracts\Entity\{CountryInterface,LanguageInterface,MovieCollectionInterface,MovieGenreInterface,MovieInterface,ProductionCompanyInterface};
 use App\Controller\Movie\GetItem;
 use App\Controller\Movie\SearchCollection;
 use App\Entity\DTO\Trait\{IdentifierTrait,PathTrait};
@@ -36,7 +38,7 @@ use ApiPlatform\Metadata\QueryParameter;
     )
   ]
 )]
-class MovieDTO extends AbstractEntityDTO {
+class MovieDTO extends AbstractEntityDTO implements MovieInterface {
 
   use IdentifierTrait;
   use PathTrait;
@@ -96,11 +98,11 @@ class MovieDTO extends AbstractEntityDTO {
   public function getImdbId(): ?string { return $this->imdbId; }
   public function getHomepage(): ?string { return $this->homepage; }
   public function getBudget(): ?int { return $this->budget; }
-  public function setBelongsToCollection(MovieCollectionDTO $collection): static { $this->belongsToCollection=$collection; return $this; }
-  public function getBelongsToCollection(): ?MovieCollectionDTO { return $this->belongsToCollection; }
+  public function setBelongsToCollection(MovieCollectionInterface $collection): EntityInterface { $this->belongsToCollection=$collection; return $this; }
+  public function getBelongsToCollection(): ?MovieCollectionInterface { return $this->belongsToCollection; }
   public function getAdult(): bool { return $this->adult; }
-  public function setOriginalLanguage(LanguageDTO $language): static { $this->originalLanguage = $language; return $this; }
-  public function getOriginalLanguage(): ?LanguageDTO { return $this->originalLanguage; }
+  public function setOriginalLanguage(LanguageInterface $language): EntityInterface { $this->originalLanguage = $language; return $this; }
+  public function getOriginalLanguage(): ?LanguageInterface { return $this->originalLanguage; }
   public function getOriginalTitle(): ?string { return $this->originalTitle; }
   public function getOverview(): ?string { return $this->overview; }
   public function getPopularity(): float { return $this->popularity; }
@@ -108,14 +110,14 @@ class MovieDTO extends AbstractEntityDTO {
   public function getTitle(): ?string { return $this->getName(); }
   public function getVoteAverage(): float { return $this->voteAverage; }
   public function getVoteCount(): float { return $this->voteCount; }
-  public function addMovieGenre(MovieGenreDTO $movieGenre): static { $this->movieGenres->add($movieGenre); return $this; }
+  public function addMovieGenre(MovieGenreInterface $movieGenre): EntityInterface { $this->movieGenres->add($movieGenre); return $this; }
   public function getMovieGenres(): Collection { return $this->movieGenres; }
-  public function addOriginCountry(CountryDTO $country): static { $this->originCountries->add($country); return $this; }
+  public function addOriginCountry(CountryInterface $country): EntityInterface { $this->originCountries->add($country); return $this; }
   public function getOriginCountries(): Collection { return $this->originCountries; }
-  public function addProductionCompany(ProductionCompanyDTO $pc): static { $this->productionCompanies->add($pc); return $this; }
+  public function addProductionCompany(ProductionCompanyInterface $pc): EntityInterface { $this->productionCompanies->add($pc); return $this; }
   public function getProductionCompanies(): Collection { return $this->productionCompanies; }
-  public function addProductioncountry(CountryDTO $country): static { $this->productionCountries->add($country); return $this; }
+  public function addProductioncountry(CountryInterface $country): EntityInterface { $this->productionCountries->add($country); return $this; }
   public function getProductionCountries(): Collection { return $this->productionCountries; }
-  public function addSpokenLanguage(LanguageDTO $lg): static { $this->spokenLanguages->add($lg); return $this; }
+  public function addSpokenLanguage(LanguageInterface $lg): EntityInterface { $this->spokenLanguages->add($lg); return $this; }
   public function getSpokenLanguages(): Collection { return $this->spokenLanguages; }
 }

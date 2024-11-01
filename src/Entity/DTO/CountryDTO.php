@@ -2,10 +2,11 @@
 
 namespace App\Entity\DTO;
 
+use App\Contracts\Entity\CountryInterface;
 use App\Entity\Trait\Country\SerializerTrait;
 use App\Entity\DTO\Trait\{IdentifierTrait,ReferenceTrait};
 
-class CountryDTO extends AbstractEntityDTO {
+class CountryDTO extends AbstractEntityDTO implements CountryInterface {
 
   use IdentifierTrait;
   use ReferenceTrait;

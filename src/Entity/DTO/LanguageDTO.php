@@ -2,10 +2,11 @@
 
 namespace App\Entity\DTO;
 
+use App\Contracts\Entity\LanguageInterface;
 use App\Entity\Trait\Language\SerializerTrait;
 use App\Entity\DTO\Trait\{IdentifierTrait,ReferenceTrait};
 
-class LanguageDTO extends AbstractEntityDTO {
+class LanguageDTO extends AbstractEntityDTO implements LanguageInterface {
 
   use IdentifierTrait;
   use ReferenceTrait;
