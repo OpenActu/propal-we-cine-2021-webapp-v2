@@ -38,7 +38,7 @@ export default function ({movieValue, defaultSrc}) {
     }
 
     function handleClick() {
-        const route = Routing.generate('api_movie_GET_item',{id: movie.id});
+        const route = Routing.generate('api_movie_dto_GET_item',{id: movie.id});
         setLoading(true);
         freezeBtns();
         fetch(route)

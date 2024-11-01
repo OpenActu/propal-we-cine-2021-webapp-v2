@@ -17,11 +17,11 @@ use ApiPlatform\Metadata\QueryParameter;
 #[ApiResource(
   operations: [
     new Get(
-      uriTemplate: '/movie/{id}',
+      uriTemplate: '/movie_dto/{id}',
       controller: GetItem::class
     ),
     new GetCollection(
-      uriTemplate: '/movie/search/',
+      uriTemplate: '/movie_dto/search/',
       controller: SearchCollection::class,
       parameters:
         new Parameters([

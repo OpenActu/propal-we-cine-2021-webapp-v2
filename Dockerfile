@@ -45,13 +45,12 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
 RUN npm install --global yarn
-# --- installation de npm & yarn /
-# --- installation de yarn
-#RUN apt-get update && apt-get install -y gnupg && \
-#    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-#    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-#    apt-get install -y yarn
-# --- installation de yarn /
+
+# --- extension postgres
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
+# --- extension postgres /
 
 RUN apt autoremove -y
 

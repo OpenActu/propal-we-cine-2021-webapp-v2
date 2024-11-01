@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/movie')]
+#[Route('/api/movie_dto')]
 class SearchCollection extends AbstractController
 {
     public function __construct(
@@ -19,7 +19,7 @@ class SearchCollection extends AbstractController
     ) {
     }
 
-    #[Route('/search/', name: 'api_movie_GET_search_collection', methods:["GET"],options: ['expose' => true])]
+    #[Route('/search/', name: 'api_movie_dto_GET_search_collection', methods:["GET"],options: ['expose' => true])]
     public function __invoke(Request $request): Response
     {
         return new JsonResponse($this->mm->setLocale($request->getLocale())->search(query: $request->get('term',''),page: 1)->serializeToArray());

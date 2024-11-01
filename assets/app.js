@@ -24,7 +24,7 @@ require('webpack-jquery-ui');
 
 $(document).ready(() => {
   $("#navbar_movie_search").autocomplete({
-    source: Routing.generate('api_movie_GET_search_collection'),
+    source: Routing.generate('api_movie_dto_GET_search_collection'),
     minLength:3,
     select: function( event, ui ) { },
     create: function( event, ui) {

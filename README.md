@@ -44,3 +44,4 @@ L'authenfication est minimaliste en l'état. Pour se connecter il suffit simplem
 1. Migration sf 5.4 vers 6.4  
 2. Suppression des références au toolkit FOPG
 3. Intégration de REACT sur le chargement des images d'entête
+4. Publication des web services via API PLATFORM

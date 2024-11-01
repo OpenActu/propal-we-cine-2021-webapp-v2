@@ -2,8 +2,8 @@
 
 namespace App\Entity\DTO;
 
-use App\Contracts\{EntityDTOInterface, SerializerInterface};
+use App\Contracts\{EntityInterface, EntityDTOInterface, SerializerInterface};
 
-abstract class AbstractEntityDTO implements EntityDTOInterface, SerializerInterface {
+abstract class AbstractEntityDTO implements EntityInterface, EntityDTOInterface, SerializerInterface {
 
 }
