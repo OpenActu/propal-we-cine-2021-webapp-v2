@@ -13,9 +13,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Contracts\{EntityInterface, ReceiverDTOInterface};
+use ApiPlatform\Metadata\Get;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    cacheHeaders: [
+        'max_age' => 3600,
+        'shared_max_age' => 12000,
+        'vary' => ['Authorization', 'Accept-Language']
+    ],
+    operations: [
+        new Get(),
+    ]
+)]
 class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
 {
     use ReceiverDTOTrait;
