@@ -9,6 +9,9 @@ doctrine:
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
     orm:
+        result_cache_driver: 
+            type: pool
+            pool: custom_cache_pool
         controller_resolver:
             auto_mapping: false
         auto_generate_proxy_classes: true

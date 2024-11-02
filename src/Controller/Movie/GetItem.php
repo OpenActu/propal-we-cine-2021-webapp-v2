@@ -13,11 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Message\MovieDTOReceiver;
+use App\Service\Cache\CacheManager;
 
 #[Route('/api/movie_dto')]
 class GetItem extends AbstractController
 {
     public function __construct(
+      private CacheManager $cache,
       private MessageBusInterface $bus,
       private MovieManager $mm,
       private MovieRepository $mr,
@@ -27,20 +29,27 @@ class GetItem extends AbstractController
 
     #[Route('/{id}', name: 'api_movie_dto_GET_item', requirements:["id"=>"\d+"], methods:["GET"],options: ['expose' => true])]
     public function __invoke(Request $request, ?int $id=null): Response
-    {  
-      $movie = $this->mr->findOneBy(['locale' => $request->getLocale(), 'tmdbId' => $id]);
-      if(null === $movie) {  
-        /** @var ?MovieDTO $movieDTO */
-        $movieDTO= $this->mm->setLocale($request->getLocale())->find($id);
-        /** @var array $data */
-        $data=[];
-        if($movieDTO) {
-          $data = $movieDTO->serializeToArray();
-          $this->bus->dispatch(new MovieDTOReceiver($data));
+    {
+      $hasCache = $this->cache->init(['class' => get_called_class(),'id' => $id])->exists();
+      if(false === $hasCache) {
+        $movie = $this->mr->findOneBy(['locale' => $request->getLocale(), 'tmdbId' => $id]);
+        if(null === $movie) {  
+          /** @var ?MovieDTO $movieDTO */
+          $movieDTO= $this->mm->setLocale($request->getLocale())->find($id);
+          /** @var array $data */
+          $data=[];
+          if($movieDTO) {
+            $data = $movieDTO->serializeToArray();
+            $this->bus->dispatch(new MovieDTOReceiver($data));
+          }
         }
+        else {
+          $data = $this->serializer->normalize($movie,null,['groups' => 'api_movie_dto_GET_item']);
+        }
+        $this->cache->save($data);
       }
       else {
-        $data = $this->serializer->normalize($movie,null,['groups' => 'api_movie_dto_GET_item']);
+        $data = $this->cache->get();
       }
       return new JsonResponse($data);
     }
