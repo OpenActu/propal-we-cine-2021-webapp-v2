@@ -69,5 +69,14 @@ RUN mkdir /data && \
 RUN mkdir /share
 ###< share right ###
 
+###> ldap ###
+RUN \
+apt  update && \
+apt install libldap2-dev libldap-common -y && \
+rm -rf /var/lib/apt/lists/* && \
+docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
+docker-php-ext-install ldap
+###< ldap ###
+
 EXPOSE 80
 WORKDIR /var/www/html
