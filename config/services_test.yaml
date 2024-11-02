@@ -11,3 +11,7 @@ services:
         public: true
         autowire: true
         autoconfigure: true
+    App\Service\Minio\FileSystem:
+        public: true
+        autowire: true
+        autoconfigure: true

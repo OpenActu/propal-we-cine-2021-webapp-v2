@@ -2,32 +2,35 @@
 
 namespace App\Tests\Service\Minio;
 
-use App\Utils\Env\Env;
 use App\Tests\KernelTestCase;
-use App\Service\Minio\Client as MinioClient; 
+use App\Service\Minio\FileSystem as FSO; 
 
-class NativeMinioTest extends KernelTestCase {
+class FileSystemTest extends KernelTestCase {
     public function testGetCategories() {
         self::bootKernel();
         /** @var TestContainer $container */
         $container = static::getContainer();
         /** @var MovieGenreManager $mvm */
-        $s3 = $container->get(MinioClient::class);
+        $fso = $container->get(FSO::class);
 
         $this->section('Validation des appels à Minio');
 
         $this
             ->given(
-                description: "J'utilise une session de Minio",
-                s3: $s3
+                description: "J'utilise un FSO de Minio",
+                fso: $fso
             )
             ->when(
                 description: 'Je stocke une valeur dans Minio',
-                callback: function(MinioClient $s3) { $s3->putString('testkey','welcome'); }
+                callback: function(FSO $fso) {
+                    $fso->write('tests/new-sample.jpeg', realpath(__DIR__.'/docs/sample.jpeg'));
+                }
             )
             ->then(
                 description: 'Je retrouve la valeur stockée',
-                callback: function(MinioClient $s3): bool { return ($s3->getString('testkey') === 'welcome'); },
+                callback: function(FSO $fso): bool { 
+                    return (null !== $fso->read('tests/new-sample.jpeg'));
+                },
                 result: true
             )
         ;
