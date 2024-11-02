@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Contracts\{DocumentInterface, LocalizationInterface};
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-class Image
+class Image implements DocumentInterface, LocalizationInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,6 +25,12 @@ class Image
 
     #[ORM\Column(length: 255)]
     private ?string $format = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $size = null;
+
+    #[ORM\Column(length: 255, nullable: false)]
+    private ?string $locale = LocalizationInterface::DEFAULT_LOCALE;
 
     public function getId(): ?int
     {
@@ -74,6 +81,30 @@ class Image
     public function setFormat(string $format): static
     {
         $this->format = $format;
+
+        return $this;
+    }
+
+    public function getSize(): ?string
+    {
+        return $this->size;
+    }
+
+    public function setSize(?string $size): static
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): static
+    {
+        $this->locale = $locale;
 
         return $this;
     }

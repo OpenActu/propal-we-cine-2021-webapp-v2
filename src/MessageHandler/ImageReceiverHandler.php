@@ -1,6 +1,7 @@
 <?php 
 namespace App\MessageHandler;
 
+use App\Service\TMDB\Manager\ImageManager;
 use App\Entity\Image;
 use App\Message\ImageReceiver; 
 use App\Repository\ImageRepository;
@@ -12,22 +13,29 @@ use App\Service\Minio\FileSystem as FSO;
 class ImageReceiverHandler {
 
     public function __construct(
+        private ImageManager $im,
         private EntityManagerInterface $em,
         private ImageRepository $imgr,
         private FSO $fso
     ) { }
 
     public function __invoke(ImageReceiver $ir) {
-        $image = $this->imgr->findOneBy(['originFilename' => $ir->getFilename(),'format' => $ir->getFormat()]);
+        $image = $this->imgr->findOneBy(['originFilename' => $ir->getFilename(),'format' => $ir->getFormat(),'locale' => $ir->getLocale()]);
         if(null === $image) {
-            
-            $path = $this->imgr->build_path(format: $ir->getFormat(), filename: $ir->getFilename());
-            $this->fso->writeContent($path, $ir->getContent());
+            /** @var ?string $content */
+            $content = $this
+                ->im
+                ->setLocale($ir->getLocale())
+                ->download(filename: $ir->getFilename(),format: $ir->getFormat())
+            ;
+            $path = $this->imgr->build_path(format: $ir->getFormat(), filename: $ir->getFilename(),locale: $ir->getLocale());
+            $this->fso->writeContent($path, $content);
             $image = new Image();
             $image
                 ->setOriginFilename($ir->getFilename())
                 ->setFilename($ir->getFilename())
                 ->setFormat($ir->getFormat())
+                ->setlocale($ir->getLocale())
                 ->setPath($path)
             ;
             $this->em->persist($image);

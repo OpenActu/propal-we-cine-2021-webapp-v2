@@ -17,5 +17,5 @@ class ImageDTO extends AbstractEntityDTO implements DocumentInterface {
     public function getFilename(): string { return $this->filename; }
     public function getType(): string { return null; }
     public function getSize(): ?string { return null; }
-    public function getOriginalFilename(): string { return $this->filename; } 
+    public function getOriginFilename(): string { return $this->filename; } 
 }

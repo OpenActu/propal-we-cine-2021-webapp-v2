@@ -5,7 +5,7 @@ trait SerializerTrait {
     public function serializeToArray(): array {
         return [
             'filename' => $this->getFilename(),
-            'originalFilename' => $this->getOriginalFilename(),
+            'originFilename' => $this->getOriginFilename(),
             'size' => $this->getSize(),
         ];
     }
