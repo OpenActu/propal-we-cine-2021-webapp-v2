@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Contracts\Entity\MovieGenreInterface;
 use App\Entity\Trait\MovieGenre\ReceiverDTOTrait;
 use App\Repository\MovieGenreRepository;
@@ -19,6 +20,7 @@ class MovieGenre implements ReceiverDTOInterface, EntityInterface, MovieGenreInt
     private ?int $id = null;
 
     #[ORM\Column(length: 255,nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?string $name = null;
 
     #[ORM\Column]

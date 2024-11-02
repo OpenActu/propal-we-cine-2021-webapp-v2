@@ -30,8 +30,8 @@ class MovieGenreController extends AbstractController
         $movies=$this->mm->setLocale($request->getLocale())->findBy(params: (null !== $id)?['with_genres' => $id]:[], sortBy: ['popularity' => 'desc'], page: 1);
         /** @var MovieDTO $movieDTO */
         foreach($movies as $movieDTO) {
-            $data = $movieDTO->serializeToArray();
-            $this->bus->dispatch(new MovieDTOReceiver($data));
+            //$data = $movieDTO->serializeToArray();
+            //$this->bus->dispatch(new MovieDTOReceiver($data));
         }
         return $this->render('movie/index.html.twig', [
             'movieGenres' => $this->mgm->setLocale($request->getLocale())->findAll(),

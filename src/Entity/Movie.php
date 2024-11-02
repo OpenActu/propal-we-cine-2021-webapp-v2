@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Contracts\CollectionInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Contracts\Entity\{CountryInterface,LanguageInterface,MovieCollectionInterface,MovieGenreInterface,MovieInterface,ProductionCompanyInterface};
 use App\Entity\DTO\MovieDTO;
 use App\Entity\Trait\Movie\ReceiverDTOTrait;
@@ -25,61 +25,79 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['api_movie_dto_GET_item'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
+    #[Groups(['api_movie_dto_GET_item'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?bool $adult = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?string $originalTitle = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?string $overview = null;
 
     #[ORM\Column(nullable: false)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private float $popularity = 0;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?\DateTimeInterface $releaseDate = null;
 
     #[ORM\Column(nullable: false)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private float $voteAverage = 0;
 
     #[ORM\Column(nullable: false)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private int $voteCount = 0;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?int $budget = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?string $imdbId = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?int $revenue = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?string $status = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?string $tagline = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?bool $video = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?int $tmdbId = null;
 
     #[ORM\ManyToOne]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?Language $originalLanguage = null;
 
     /**
      * @var Collection<int, MovieGenre>
      */
     #[ORM\ManyToMany(targetEntity: MovieGenre::class)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private Collection $genres;
 
     /**
@@ -95,6 +113,7 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     private ?string $homepage = null;
 
     #[ORM\ManyToOne]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?MovieCollection $belongsToCollection = null;
 
     /**
@@ -115,6 +134,9 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
      */
     #[ORM\ManyToMany(targetEntity: Language::class)]
     private Collection $spokenLanguages;
+
+    #[ORM\Column(length: 255)]
+    private ?string $locale = null;
 
     public function __construct()
     {
@@ -335,9 +357,9 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     }
 
     /**
-     * @return CollectionInterface<int, MovieGenreInterface>
+     * @return Collection<int, MovieGenreInterface>
      */
-    public function getGenres(): CollectionInterface
+    public function getGenres(): Collection
     {
         return $this->genres;
     }
@@ -359,9 +381,9 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     }
 
     /**
-     * @return CollectionInterface<int, CountryInterface>
+     * @return Collection<int, CountryInterface>
      */
-    public function getOriginCountries(): CollectionInterface
+    public function getOriginCountries(): Collection
     {
         return $this->originCountries;
     }
@@ -419,9 +441,9 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     }
 
     /**
-     * @return CollectionInterface<int, ProductionCompanyInterface>
+     * @return Collection<int, ProductionCompanyInterface>
      */
-    public function getProductionCompanies(): CollectionInterface
+    public function getProductionCompanies(): Collection
     {
         return $this->productionCompanies;
     }
@@ -443,9 +465,9 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     }
 
     /**
-     * @return CollectionInterface<int, CountryInterface>
+     * @return Collection<int, CountryInterface>
      */
-    public function getProductionCountries(): CollectionInterface
+    public function getProductionCountries(): Collection
     {
         return $this->productionCountries;
     }
@@ -467,9 +489,9 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     }
 
     /**
-     * @return CollectionInterface<int, LanguageInterface>
+     * @return Collection<int, LanguageInterface>
      */
-    public function getSpokenLanguages(): CollectionInterface
+    public function getSpokenLanguages(): Collection
     {
         return $this->spokenLanguages;
     }
@@ -486,6 +508,18 @@ class Movie implements ReceiverDTOInterface, EntityInterface, MovieInterface
     public function removeSpokenLanguage(LanguageInterface $spokenLanguage): static
     {
         $this->spokenLanguages->removeElement($spokenLanguage);
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(string $locale): static
+    {
+        $this->locale = $locale;
 
         return $this;
     }

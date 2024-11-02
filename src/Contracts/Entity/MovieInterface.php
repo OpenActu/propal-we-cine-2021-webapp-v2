@@ -1,9 +1,9 @@
 <?php
 namespace App\Contracts\Entity;
 
-use App\Contracts\{CollectionInterface,EntityInterface};
+use App\Contracts\{EntityInterface, LocalizationInterface};
 
-interface MovieInterface {
+interface MovieInterface extends LocalizationInterface {
     public function isVideo(): ?bool;
     public function getTagline(): ?string;
     public function getStatus(): ?string;
@@ -26,13 +26,13 @@ interface MovieInterface {
     public function getVoteAverage(): float;
     public function getVoteCount(): int;
     public function addGenre(MovieGenreInterface $movieGenre): EntityInterface;
-    public function getGenres(): CollectionInterface;
+    public function getGenres(): mixed;
     public function addOriginCountry(CountryInterface $country): EntityInterface;
-    public function getOriginCountries(): CollectionInterface;
+    public function getOriginCountries(): mixed;
     public function addProductionCompany(ProductionCompanyInterface $pc): EntityInterface;
-    public function getProductionCompanies(): CollectionInterface;
+    public function getProductionCompanies(): mixed;
     public function addProductioncountry(CountryInterface $country): EntityInterface;
-    public function getProductionCountries(): CollectionInterface;
+    public function getProductionCountries(): mixed;
     public function addSpokenLanguage(LanguageInterface $lg): EntityInterface;
-    public function getSpokenLanguages(): CollectionInterface;
+    public function getSpokenLanguages(): mixed;
 }

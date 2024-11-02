@@ -18,6 +18,7 @@ trait ReceiverDTOTrait {
             'setTitle' => 'title',
             'setTmdbId' => 'id',
             'setAdult' => 'adult',
+            'setLocale' => 'locale',
             'setOriginalTitle' => 'originalTitle',
             'setOverview' => 'overview',
             'setPopularity' => 'popularity',

@@ -49,6 +49,7 @@ class MovieManager extends AbstractManager {
       ignoreJWT: true
     );
     if($output['statusCode'] == Response::HTTP_OK) {
+      $output['data']['locale']=$this->getLocale();
       $collection = self::convert_array_to_collection($output['data']);
       $this->setTotalPages($output['data']['total_pages']);
       $this->setTotalResults($output['data']['total_results']);
@@ -73,6 +74,7 @@ class MovieManager extends AbstractManager {
       ignoreJWT: true
     );
     if($output['statusCode'] == Response::HTTP_OK) {
+      $output['data']['locale']=$this->getLocale();
       $collection = self::convert_array_to_collection($output['data'],$limit);
       $this->setTotalPages($output['data']['total_pages']);
       $this->setTotalResults($output['data']['total_results']);
@@ -92,6 +94,7 @@ class MovieManager extends AbstractManager {
       params: ['api_key' => $this->getApiKey(),'language' => $this->getLocale()]
     );
     if($output['statusCode'] == Response::HTTP_OK) {
+      $output['data']['locale']=$this->getLocale();
       $entity = self::convert_array_to_entity($output['data']);
       return $entity;
     }

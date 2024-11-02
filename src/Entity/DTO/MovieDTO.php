@@ -55,6 +55,7 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
   public function __construct(
     int $id,
     string $title,
+    private string $locale,
     ?string $posterPath=null,
     ?string $backdropPath=null,
     private ?bool $adult=null,
@@ -89,6 +90,8 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
       $this->setOriginalLanguage(new LanguageDTO(code: $originalLanguage));
     }
   }
+  public function getLocale(): string { return $this->locale; }
+  public function setLocale(string $locale): static { $this->locale=$locale; return $this; }
   public function getTmdbId(): ?int { return $this->id; }
   public function isVideo(): ?bool { return $this->video; }
   public function getTagline(): ?string { return $this->tagline; }

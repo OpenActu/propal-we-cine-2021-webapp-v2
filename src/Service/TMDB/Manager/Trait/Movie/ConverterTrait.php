@@ -11,6 +11,8 @@ trait ConverterTrait {
   public static function convert_array_to_collection(array $data, int $limit=SearchInterface::DEFAULT_LIMIT): Collection {
     /** @var Collection $collection */
     $collection = new Collection();
+    /** @var string $locale */
+    $locale = $data['locale'];
     if(!empty($data['results'])) {
       $collection = new Collection(
         array: array_slice($data['results'],0,$limit),
@@ -18,7 +20,8 @@ trait ConverterTrait {
           return $movie['popularity'];
         },
         cmpAlgorithm: function($a,$b): bool { return ($a < $b); },
-        callbackForValue: function(int $index, array $movie): MovieDTO {
+        callbackForValue: function(int $index, array $movie) use($locale): MovieDTO  {
+          $movie['locale']=$locale;
           return self::convert_array_to_entity($movie);
         }
       );
@@ -30,6 +33,7 @@ trait ConverterTrait {
     /** @var MovieDTO $entity */
     $entity = new MovieDTO(
       id: $movie['id'],
+      locale: $movie['locale'],
       title: $movie['title'],
       adult: $movie['adult']??false,
       backdropPath: $movie['backdrop_path']??null,

@@ -24,10 +24,10 @@ export default function ({movieValue, defaultSrc}) {
       }
     function populateModal(data) {
         let tmp="";
-        data.movieGenres.map((item) => { tmp+='<span class="badge bg-secondary">'+item['name']+'</span>&nbsp;'; });
+        data.genres.map((item) => { tmp+='<span class="badge bg-secondary">'+item['name']+'</span>&nbsp;'; });
         
         $("#modal_movie_title").text(data.title);
-        $("#modal_movie_id").text(data.id);
+        $("#modal_movie_id").text(data.tmdbId);
         $("#modal_movie_imdb_id").text(data.imdbId);
         $("#modal_movie_original_title").text(data.originalTitle);
         $("#modal_movie_budget").text(data.budget);

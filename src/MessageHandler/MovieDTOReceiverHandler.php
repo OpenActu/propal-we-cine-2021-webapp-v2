@@ -23,7 +23,6 @@ class MovieDTOReceiverHandler {
         $movieDTO = $movieDTOReceiver->getMovieDTO();
         if(empty($movieDTO['id']))
             return;
-
         $movie = $this->mr->findOneBy(['tmdbId' => $movieDTO['id']]);
         if(null === $movie) {
             $movie = new Movie();
@@ -33,12 +32,12 @@ class MovieDTOReceiverHandler {
 
         if(!empty($movieDTO['originalLanguage']) && is_array($movieDTO['originalLanguage'])) {
             $languageDTO = $movieDTO['originalLanguage'];
-            $language = $this->lr->findOneBy(['code' => $languageDTO['code']]);
+            $language = $this->lr->findOneBy(['code' => $languageDTO['code'],'locale' => $movieDTO['locale']]);
             if(null===$language) {
                 $language = new Language();
                 $this->em->persist($language);
             }  
-            $language->populateFromArray($languageDTO);
+            $language->populateFromArray(array_merge($languageDTO,['locale' => $movieDTO['locale']]));
             $movie->setOriginalLanguage($language);    
         }
         if(!empty($movieDTO['movieGenres']) && is_array($movieDTO['movieGenres']) && count($movieDTO['movieGenres'])) {

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MovieCollectionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MovieCollectionRepository::class)]
 class MovieCollection
@@ -17,6 +18,7 @@ class MovieCollection
     private ?int $tmdbId = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['api_movie_dto_GET_item'])]
     private ?string $name = null;
 
     public function getId(): ?int

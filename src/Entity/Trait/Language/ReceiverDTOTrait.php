@@ -19,6 +19,8 @@ trait ReceiverDTOTrait {
             $this->setName($obj['name']??null);
         if(!empty($obj['englishName']))
             $this->setEnglishName($obj['englishName']??null);
+        if(!empty($obj['locale']))
+            $this->setLocale($obj['locale']);
         return $this;
     }
 

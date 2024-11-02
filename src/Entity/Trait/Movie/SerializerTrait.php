@@ -6,6 +6,7 @@ trait SerializerTrait {
   public function serializeToArray(): array {
     return [
       'id' => $this->getId(),
+      'locale' => $this->getLocale(),
       'title' => $this->getTitle(),
       'adult' => $this->isAdult(),
       'originalTitle' => $this->getOriginalTitle(),
@@ -24,7 +25,7 @@ trait SerializerTrait {
       'tagline' => $this->getTagline(),
       'video' => $this->isVideo(),
       'originalLanguage' => $this->getOriginalLanguage() ? $this->getOriginalLanguage()->serializeToArray() : null,
-      'movieGenres' => $this->getGenres()->serializeToArray(),
+      'genres' => $this->getGenres()->serializeToArray(),
       'belongsToCollection' => $this->getBelongsToCollection() ? $this->getBelongsToCollection()->serializeToArray() : null,
       'originCountries' => $this->getOriginCountries()->serializeToArray(),
       'productionCompanies' => $this->getProductionCompanies()->serializeToArray(),
