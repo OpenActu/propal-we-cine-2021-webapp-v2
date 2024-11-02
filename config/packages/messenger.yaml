@@ -11,6 +11,7 @@ framework:
 
         routing:
             'App\Message\MovieDTOReceiver': async
+            'App\Message\ImageReceiver': async
 
 # when@test:
 #    framework:

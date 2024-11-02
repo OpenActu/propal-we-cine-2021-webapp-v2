@@ -36,6 +36,10 @@ class FileSystem {
         return $this;
     }
 
+    public function writeContent(string $path, string $content): static {
+        $this->filesystem->write($path, $content);
+        return $this;
+    }
     public function read(string $path): ?string {
         try { return $this->filesystem->read($path); }
         catch(\Exception $e) { }
