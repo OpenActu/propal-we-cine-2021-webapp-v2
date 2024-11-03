@@ -1,50 +1,16 @@
-export const Minio = require("minio");
+import { initMinio, putObject, Minio } from 'minio-js';
 
-
-let MinioConfig = null;
-
-export function initMinio(config) {
-  if (!config) {
-    throw new Error("Minio的配置不能为空");
-  }
-  console.log("MinioJs.config:");
-  console.log(config);
-  MinioConfig = config;
+var MinioConfig = null;
+export const startMinio = function(conf) {
+    initMinio(conf);
+    MinioConfig=conf;
 }
 
-//封装的上传到minio
-export function putObject(bucketName, file, fileName, callback) {
-  if (!MinioConfig) {
-    throw new Error("请先初始化Minio");
-  }
-  console.log("MinioJs.putObject");
-  let buf = Buffer.from(file); //Buffer
-  var Minio = require("minio");
-  var minioClient = new Minio.Client(MinioConfig);
-  minioClient.putObject(bucketName, fileName, buf, callback
-    // function (err, data) {
-    //   if (err) console.log(err);
-    //   else console.log("Successfully uploaded data to testbucket/testobject");
-    // }
-  );
+export const sendToMinio = function(bucket, buffer, path) {
+    putObject(bucket, buffer, path);
 }
 
-
-//测试用
-function putObjectTest(bucketName, file, fileName) {
-  console.log("MinioJs.putObject:");
-  console.log(file);
-  let buf = Buffer.from(file); //Buffer
-  var Minio = require("minio");
-  var minioClient = new Minio.Client({
-    endPoint: "192.168.2.98",
-    port: 9002,
-    useSSL: false,
-    accessKey: "admin",
-    secretKey: "12345678",
-  });
-  minioClient.putObject(bucketName, fileName, buf, function (err, data) {
-    if (err) console.log(err);
-    else console.log("Successfully uploaded data to testbucket/testobject");
-  });
+export const receiveFromMinio = async function(bucket, path) {
+    let minioClient = new Minio.Client(MinioConfig);
+    return await minioClient.getObject(bucket, path);
 }
