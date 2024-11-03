@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Image as BootstrapImage} from 'react-bootstrap';
-import { startMinio, sendToMinio, receiveFromMinio } from '../../js/utils/minio';
+import { startMinio, receiveFromMinio } from '../../js/utils/minio';
 const DEFAULT_FORMAT='w500';
 const IMAGE_PATH='images';
 function build_path(locale, format, filename) { 
@@ -13,17 +13,16 @@ const Image = ({format, filename, defaultSrc,alt=""}) => {
     var url = Routing.generate('image_get',{format:format,filename:filename});
 
     useEffect(() => {
-
         const data = [];
         startMinio({
-            endPoint: 'localhost',
-            port: 9000,
-            useSSL: false,
-            accessKey: 'mYOCgRwJ4Y0Y1h631j5K',
-            secretKey: 'jQSlr5ydkAD4z5x6gRPtEQeBdNJwN5sohtjR0Aww',
+            endPoint: process.env.MINIO_JS_HOSTNAME,
+            port: process.env.MINIO_JS_PORT,
+            useSSL: process.env.MINIO_JS_USE_SSL,
+            accessKey: process.env.MINIO_READER_ACCESS_KEY,
+            secretKey: process.env.MINIO_READER_SECRET_KEY,
         });
 
-        receiveFromMinio("documents", build_path("fr", format, filename))
+        receiveFromMinio(process.env.MINIO_BUCKET, build_path("fr", format, filename))
         .then((stream) => {
             stream.on('data', chunk => { data.push(chunk); });
             stream.on('end', () => { 

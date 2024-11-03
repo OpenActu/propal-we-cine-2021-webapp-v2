@@ -51,4 +51,5 @@ L'authenfication est minimaliste en l'état. Pour se connecter il suffit simplem
 6. Ajout d'un switcher pour privilégier la BDD à l'API distante
 6. Activer REDIS pour optimiser les chargements des contrôleurs 
 7. Stocker les images via AWS dans S3 Minio
+8. Activer un service de CDN pour éviter les appels serveur sur les images
 8. @todo mettre en place RabbitMQ
