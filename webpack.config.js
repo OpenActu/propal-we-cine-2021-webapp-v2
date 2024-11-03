@@ -1,5 +1,4 @@
 const Encore = require('@symfony/webpack-encore');
-const path = require("path");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
