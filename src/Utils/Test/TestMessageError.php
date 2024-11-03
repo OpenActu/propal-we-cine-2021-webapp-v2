@@ -1,6 +1,6 @@
 <?php
 
-namespace FOPG\Component\UtilsBundle\Test;
+namespace App\Utils\Test;
 
 class TestMessageError extends TestMessage
 {
