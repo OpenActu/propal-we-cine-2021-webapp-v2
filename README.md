@@ -47,7 +47,8 @@ L'authenfication est minimaliste en l'état. Pour se connecter il suffit simplem
 2. Suppression des références au toolkit FOPG
 3. Intégration de REACT sur le chargement des images d'entête
 4. Publication des web services via API PLATFORM
-5. Import asynchrone des films du serveur
+5. Import asynchrone des films et images du serveur
 6. Ajout d'un switcher pour privilégier la BDD à l'API distante
-6. @todo activer REDIS pour les retours WS 
-7. @todo stocker les images dans S3 Minio
+6. Activer REDIS pour optimiser les chargements des contrôleurs 
+7. Stocker les images via AWS dans S3 Minio
+8. @todo mettre en place RabbitMQ

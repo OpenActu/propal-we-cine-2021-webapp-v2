@@ -6,6 +6,8 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
+const Dotenv = require('dotenv-webpack');
+
 Encore
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
@@ -75,8 +77,11 @@ Encore
     //.autoProvidejQuery()
     .copyFiles([
         { from: './assets/images', to: 'images/[path][name].[ext]' },
-      ])
-  
+    ])
+    .addPlugin(new Dotenv({
+        systemvars: true,
+        safe: true 
+    }))
 ;
 
 module.exports = Encore.getWebpackConfig();
