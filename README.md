@@ -41,15 +41,3 @@ php bin/phpunit tests
 
 @todo l'authentification est désactivé pour le moment
 
-# Addendum à la version de démo 
-
-1. Migration sf 5.4 vers 6.4  
-2. Suppression des références au toolkit FOPG
-3. Intégration de REACT sur le chargement des images d'entête
-4. Publication des web services via API PLATFORM
-5. Import asynchrone des films et images du serveur
-6. Ajout d'un switcher pour privilégier la BDD à l'API distante
-6. Activer REDIS pour optimiser les chargements des contrôleurs 
-7. Stocker les images via AWS dans S3 Minio
-8. Activer un service de CDN pour éviter les appels serveur sur les images
-8. @todo mettre en place RabbitMQ
