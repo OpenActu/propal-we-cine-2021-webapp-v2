@@ -78,5 +78,13 @@ docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
 docker-php-ext-install ldap
 ###< ldap ###
 
+###> amqp ###
+RUN \
+apt update && \ 
+apt install ${APT_ARGS} librabbitmq-dev && \ 
+pecl install amqp && \
+docker-php-ext-enable amqp
+
+###< amqp ###
 EXPOSE 80
 WORKDIR /var/www/html
