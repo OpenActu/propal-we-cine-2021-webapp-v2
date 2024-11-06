@@ -3,10 +3,14 @@
 namespace App\Entity\DTO\Trait;
 
 use App\Contracts\DocumentInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 trait PathTrait {
+  #[Groups(['global_dto_read'])]
   private ?DocumentInterface $poster=null;
+  #[Groups(['global_dto_read'])]
   private ?DocumentInterface $backdrop=null;
+  #[Groups(['global_dto_read'])]
   private ?DocumentInterface $logo=null;
   public function setLogo(DocumentInterface $document): static { $this->logo = $document; return $this; }
   public function getLogo(): ?DocumentInterface { return $this->logo; }

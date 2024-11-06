@@ -6,7 +6,7 @@ use Psr\Log\LoggerInterface;
 use App\Utils\Test\TestMessageError;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase as sfKernelTestCase;
 
-class KernelTestCase extends sfKernelTestCase {
+abstract class KernelTestCase extends sfKernelTestCase {
   const PREFIX_GIVEN = "[ETANT DONNE]";
   private $_iteration_number=0;
   private $_sub_iteration_number=0;

@@ -23,10 +23,7 @@ trait ConverterTrait {
         },
         cmpAlgorithm: function($a,$b): bool { return ($a < $b); },
         callbackForValue: function(int $index, array $genre): MovieGenreDTO {
-          $entity = new MovieGenreDTO();
-          $entity->setId($genre['id']);
-          $entity->setName($genre['name']);
-          return $entity;
+          return MovieGenreDTO::getInstance(id: $genre['id'],name: $genre['name']);
         }
       );
       /** Tri rapide */

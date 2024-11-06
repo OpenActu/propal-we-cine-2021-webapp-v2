@@ -31,7 +31,7 @@ trait ConverterTrait {
 
   public static function convert_array_to_entity(array $movie): MovieDTO {
     /** @var MovieDTO $entity */
-    $entity = new MovieDTO(
+    $entity = MovieDTO::getInstance(
       id: $movie['id'],
       locale: $movie['locale'],
       title: $movie['title'],
@@ -57,36 +57,36 @@ trait ConverterTrait {
 
     if(!empty($movie['belongs_to_collection'])) {
       $collection = $movie['belongs_to_collection'];
-      $entity->setBelongsToCollection(new MovieCollectionDTO(id: $collection['id'],name: $collection['name'], posterPath: $collection['poster_path'], backdropPath: $collection['backdrop_path']));
+      $entity->setBelongsToCollection(MovieCollectionDTO::getInstance(id: $collection['id'],name: $collection['name'], posterPath: $collection['poster_path'], backdropPath: $collection['backdrop_path']));
     }
 
     if(!empty($movie['genre_ids']))
       foreach($movie['genre_ids'] as $movieGenreId)
-        $entity->addGenre(new MovieGenreDTO(id: $movieGenreId));
+        $entity->addGenre(MovieGenreDTO::getInstance(id: $movieGenreId));
 
     if(!empty($movie['genres']))
       foreach($movie['genres'] as $genre)
-        $entity->addGenre(new MovieGenreDTO(id: $genre['id'],name: $genre['name']));
+        $entity->addGenre(MovieGenreDTO::getInstance(id: $genre['id'],name: $genre['name']));
 
     if(!empty($movie['origin_country']))
       foreach($movie['origin_country'] as $code)
-        $entity->addOriginCountry(new CountryDTO(code: $code));
+        $entity->addOriginCountry(CountryDTO::getInstance(code: $code));
 
     if(!empty($movie['production_companies'])) {
       foreach($movie['production_companies'] as $pc) {
-        $obj = new ProductionCompanyDTO(id: $pc['id'],name: $pc['name'],logoPath: $pc['logo_path']);
-        $obj->setOriginCountry(new CountryDTO(code: $pc['origin_country']));
+        $obj = ProductionCompanyDTO::getInstance(id: $pc['id'],name: $pc['name'],logoPath: $pc['logo_path']);
+        $obj->setOriginCountry(CountryDTO::getInstance(code: $pc['origin_country']));
         $entity->addProductionCompany($obj);
       }
     }
 
     if(!empty($movie['production_countries']))
       foreach($movie['production_countries'] as $pc)
-        $entity->addProductionCountry(new CountryDTO(code: $pc['iso_3166_1'],name: $pc['name']));
+        $entity->addProductionCountry(CountryDTO::getInstance(code: $pc['iso_3166_1'],name: $pc['name']));
 
     if(!empty($movie['spoken_languages']))
       foreach($movie['spoken_languages'] as $sl)
-        $entity->addSpokenLanguage(new LanguageDTO(name: $sl['name'],code: $sl['iso_639_1'], englishName: $sl['english_name']));
+        $entity->addSpokenLanguage(LanguageDTO::getInstance(name: $sl['name'],code: $sl['iso_639_1'], englishName: $sl['english_name']));
 
     return $entity;
   }

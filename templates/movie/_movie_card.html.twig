@@ -1,5 +1,5 @@
 <div {{ react_component('Movie/GetCard', {
-  movieValue: movie|serialize(format='json'),
+  movieValue: movie|serialize('json',{groups: 'global_dto_read'}),
   defaultSrc: asset('build/images/file.jpg'),
   }) }}>
   <div class="card">
