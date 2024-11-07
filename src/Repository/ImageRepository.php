@@ -20,6 +20,5 @@ class ImageRepository extends ServiceEntityRepository implements DecoratorInterf
         parent::__construct($registry, Image::class);
     }
 
-    public function start(?DecoratorInterface $parent=null) { }
     public static function build_path(string $locale=LocalizationInterface::DEFAULT_LOCALE, string $format, string $filename): string { return self::IMAGE_PATH.'/'.$locale.'/'.$format.'/'.$filename; }
 }
