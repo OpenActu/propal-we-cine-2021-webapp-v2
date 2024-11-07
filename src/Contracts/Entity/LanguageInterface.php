@@ -1,6 +1,8 @@
 <?php 
 namespace App\Contracts\Entity;
 
-interface LanguageInterface {
+use App\Contracts\DesignPattern\BuilderInstanceInterface;
+
+interface LanguageInterface extends BuilderInstanceInterface {
     
 }

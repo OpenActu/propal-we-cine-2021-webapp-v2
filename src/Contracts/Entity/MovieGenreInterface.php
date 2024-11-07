@@ -1,6 +1,8 @@
 <?php 
 namespace App\Contracts\Entity;
 
-interface MovieGenreInterface {
+use App\Contracts\DesignPattern\BuilderInstanceInterface;
+
+interface MovieGenreInterface extends BuilderInstanceInterface {
     
 }

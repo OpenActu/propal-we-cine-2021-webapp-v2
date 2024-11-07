@@ -1,6 +1,8 @@
 <?php 
 namespace App\Contracts\Entity;
 
-interface CountryInterface {
+use App\Contracts\DesignPattern\BuilderInstanceInterface;
+
+interface CountryInterface extends BuilderInstanceInterface {
     
 }

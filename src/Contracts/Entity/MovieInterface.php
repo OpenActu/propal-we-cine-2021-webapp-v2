@@ -2,8 +2,9 @@
 namespace App\Contracts\Entity;
 
 use App\Contracts\{EntityInterface, LocalizationInterface};
+use App\Contracts\DesignPattern\BuilderInstanceInterface;
 
-interface MovieInterface extends LocalizationInterface {
+interface MovieInterface extends LocalizationInterface, BuilderInstanceInterface {
     public function isVideo(): ?bool;
     public function getTagline(): ?string;
     public function getStatus(): ?string;
