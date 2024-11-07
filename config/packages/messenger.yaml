@@ -1,20 +1,19 @@
 framework:
     messenger:
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+        failure_transport: failed
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
             async: 
-            #'%env(MESSENGER_TRANSPORT_DSN)%'
-                dsn: '%env(RABBITMQ_URL)%'
+                dsn: '%env(RABBITMQ_TRANSPORT_DSN)%'
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+            failed: '%env(MESSENGER_TRANSPORT_DSN_FAILURE)%'
         routing:
             'App\Message\MovieDTOReceiver': async
             'App\Message\ImageReceiver': async
-
 # when@test:
 #    framework:
 #        messenger:

@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use App\Contracts\{DocumentInterface, LocalizationInterface};
+use App\Contracts\Entity\ImageInterface;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
-class Image implements DocumentInterface, LocalizationInterface
+class Image implements DocumentInterface, LocalizationInterface, ImageInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

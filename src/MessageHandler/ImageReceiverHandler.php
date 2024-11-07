@@ -28,14 +28,13 @@ class ImageReceiverHandler {
                 ->setLocale($ir->getLocale())
                 ->download(filename: $ir->getFilename(),format: $ir->getFormat())
             ;
+
             $path = $this->imgr->build_path(format: $ir->getFormat(), filename: $ir->getFilename(),locale: $ir->getLocale());
             $this->fso->writeContent($path, $content);
             $image = new Image();
+            ImageReceiver::clone($image,$ir);
             $image
                 ->setOriginFilename($ir->getFilename())
-                ->setFilename($ir->getFilename())
-                ->setFormat($ir->getFormat())
-                ->setlocale($ir->getLocale())
                 ->setPath($path)
             ;
             $this->em->persist($image);
