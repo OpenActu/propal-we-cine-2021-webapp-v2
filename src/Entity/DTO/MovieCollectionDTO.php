@@ -12,7 +12,7 @@ class MovieCollectionDTO extends AbstractEntityDTO implements MovieCollectionInt
   use PathTrait;
   use SerializerTrait;
 
-  public function __construct(
+  protected function __construct(
     int $id,
     string $name,
     ?string $backdropPath=null,
@@ -21,8 +21,8 @@ class MovieCollectionDTO extends AbstractEntityDTO implements MovieCollectionInt
     $this->setName($name);
     $this->setId($id);
     if($backdropPath)
-      $this->setBackdrop(new ImageDTO($backdropPath));
+      $this->setBackdrop(ImageDTO::getInstance(filename: $backdropPath));
     if($posterPath)
-      $this->setPoster(new ImageDTO($posterPath));
+      $this->setPoster(ImageDTO::getInstance(filename: $posterPath));
   }
 }

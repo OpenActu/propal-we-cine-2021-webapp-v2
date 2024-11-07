@@ -11,7 +11,7 @@ class MovieGenreDTO extends AbstractEntityDTO implements MovieGenreInterface {
   use IdentifierTrait;
   use SerializerTrait;
 
-  public function __construct(?int $id=null,?string $name=null) {
+  protected function __construct(?int $id=null,?string $name=null) {
     if(!empty($id))
       $this->setId($id);
     if(!empty($name))

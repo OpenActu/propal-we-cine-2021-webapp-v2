@@ -86,7 +86,7 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
   #[Groups(['global_dto_read'])]
   private ?bool $video=null;
   
-  public function __construct(
+  protected function __construct(
     int $id,
     string $title,
     string $locale,
@@ -120,11 +120,11 @@ class MovieDTO extends AbstractEntityDTO implements MovieInterface {
     $this->setAdult($adult);
     $this->setOriginalTitle($originalTitle);
     if($backdropPath)
-      $this->setBackdrop(new ImageDTO(filename: $backdropPath));
+      $this->setBackdrop(ImageDTO::getInstance(filename: $backdropPath));
     if($posterPath)
-      $this->setPoster(new ImageDTO(filename: $posterPath));
+      $this->setPoster(ImageDTO::getInstance(filename: $posterPath));
     if(!empty($originalLanguage)) {
-      $this->setOriginalLanguage(new LanguageDTO(code: $originalLanguage));
+      $this->setOriginalLanguage(LanguageDTO::getInstance(code: $originalLanguage));
     }
     $this->setOverview($overview);
     $this->setPopularity($popularity);

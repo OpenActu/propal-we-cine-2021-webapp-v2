@@ -1,4 +1,5 @@
 <?php 
 namespace App\Contracts\DesignPattern;
 
-interface SingletonInterface { }
+interface SingletonInterface { 
+}

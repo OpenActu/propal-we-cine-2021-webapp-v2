@@ -12,7 +12,7 @@ class CountryDTO extends AbstractEntityDTO implements CountryInterface {
   use ReferenceTrait;
   use SerializerTrait;
 
-  public function __construct(
+  protected function __construct(
     ?string $code=null,
     ?string $name=null
   ) {

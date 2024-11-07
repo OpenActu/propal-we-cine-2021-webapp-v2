@@ -14,7 +14,7 @@ class ProductionCompanyDTO extends AbstractEntityDTO implements ProductionCompan
 
   private ?CountryDTO $originCountry=null;
 
-  public function __construct(
+  protected function __construct(
     ?string $id=null,
     ?string $name=null,
     ?string $logoPath=null
@@ -22,7 +22,7 @@ class ProductionCompanyDTO extends AbstractEntityDTO implements ProductionCompan
     $this->setId($id);
     $this->setName($name);
     if($logoPath)
-      $this->setLogo(new ImageDTO($logoPath));
+      $this->setLogo(ImageDTO::getInstance(filename: $logoPath));
   }
 
   public function setOriginCountry(CountryDTO $country): static { $this->originCountry=$country; return $this; }

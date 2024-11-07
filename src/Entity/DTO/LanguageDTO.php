@@ -12,7 +12,7 @@ class LanguageDTO extends AbstractEntityDTO implements LanguageInterface {
   use ReferenceTrait;
   use SerializerTrait;
 
-  public function __construct(
+  protected function __construct(
     private ?string $englishName=null,
     ?string $code=null,
     ?string $name=null,

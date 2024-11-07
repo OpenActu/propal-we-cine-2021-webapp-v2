@@ -13,7 +13,7 @@ class ImageDTO extends AbstractEntityDTO implements DocumentInterface {
     #[Groups(['global_dto_read'])]
     private string $filename;
 
-    public function __construct(
+    protected function __construct(
         string $filename
     ) { 
         $this->setFilename($filename);
