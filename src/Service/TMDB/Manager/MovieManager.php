@@ -2,6 +2,7 @@
 
 namespace App\Service\TMDB\Manager;
 
+use App\Contracts\Manager\MovieManagerInterface; 
 use App\Contracts\SearchInterface;
 use App\Entity\DTO\MovieDTO;
 use App\Service\TMDB\Manager\Trait\Movie\ConverterTrait;
@@ -11,7 +12,7 @@ use App\Utils\String\StringFacility;
 use App\Utils\Env\Env;
 use Symfony\Component\HttpFoundation\Response;
 
-class MovieManager extends AbstractManager {
+class MovieManager extends AbstractManager implements MovieManagerInterface {
 
   use ConverterTrait;
   use SearchManagerTrait;

@@ -4,23 +4,21 @@ namespace App\Controller;
 
 use App\Message\MovieDTOReceiver;
 use App\Entity\DTO\MovieDTO;
-use App\Service\TMDB\Manager\{MovieGenreManager,MovieManager};
 use App\Utils\Collection\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Messenger\MessageBusInterface;
-
+use App\Contracts\Manager\{MovieManagerInterface,MovieGenreManagerInterface};
 #[Route('/movie-genre')]
 class MovieGenreController extends AbstractController
 {
     public function __construct(
       private MessageBusInterface $bus,
-      private MovieGenreManager $mgm,
-      private MovieManager $mm
+      private MovieGenreManagerInterface $mgm,
+      private MovieManagerInterface $mm
     ) {
-
     }
     #[Route('/', name: 'movie_genre_index', methods:["GET"])]
     #[Route('/{id}', name: 'movie_genre_list_by_category', requirements:["id"=>"\d+"], methods:["GET"])]

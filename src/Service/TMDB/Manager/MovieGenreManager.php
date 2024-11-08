@@ -10,8 +10,9 @@ use App\Utils\Collection\Collection;
 use App\Utils\Env\Env;
 use App\Utils\Uri\Uri;
 use Symfony\Component\HttpFoundation\Response;
+use App\Contracts\Manager\MovieGenreManagerInterface; 
 
-class MovieGenreManager extends AbstractManager {
+class MovieGenreManager extends AbstractManager implements MovieGenreManagerInterface {
 
   use ConverterTrait;
 
